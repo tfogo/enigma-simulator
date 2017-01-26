@@ -1,13 +1,5 @@
 "use strict";
 
-function alphaToNum(c) {
-  return c.charCodeAt(0) - 65;
-}
-
-function numToAlpha(i) {
-  return String.fromCharCode(i + 65);
-}
-
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 const rotorTypes = {
@@ -36,6 +28,14 @@ const rotorTypes = {
 const reflectorTypes = {
   B: 'YRUHQSLDPXNGOKMIEBFZCWVJAT',
   C: 'FVPJIAOYEDRZXWGCTKUQSBNMHL'
+}
+
+function alphaToNum(c) {
+  return c.charCodeAt(0) - 65;
+}
+
+function numToAlpha(i) {
+  return String.fromCharCode(i + 65);
 }
 
 class Rotor {

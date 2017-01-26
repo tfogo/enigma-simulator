@@ -1,8 +1,10 @@
 {
-  "name": "enigma",
+  "name": "enigmajs",
   "version": "1.0.0",
-  "description": "",
+  "description": "An Enigma Machine Simulator",
   "main": "index.js",
-  "author": "",
-  "license": "ISC"
+  "author": "Tim Fogarty <tim@tfogo.com>",
+  "repository": "expressjs/express",
+  "license": "MIT",
+  "engines": ">= 7.4.0"
 }
