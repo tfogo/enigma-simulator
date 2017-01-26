@@ -1,3 +1,5 @@
+"use strict";
+
 function alphaToNum(c) {
   return c.charCodeAt(0) - 65;
 }
@@ -6,39 +8,88 @@ function numToAlpha(i) {
   return String.fromCharCode(i + 65);
 }
 
-const ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+const rotorTypes = {
+  I: {
+    encoding: 'EKMFLGDQVZNTOWYHXUSPAIBRCJ',
+    turnover: 'Q',
+  },
+  II: {
+    encoding: 'AJDKSIRUXBLHWTMCQGZNPYFVOE',
+    turnover: 'E',
+  },
+  III: {
+    encoding: 'BDFHJLCPRTXVZNYEIWGAKMUSQO',
+    turnover: 'V',
+  },
+  IV: {
+    encoding: 'ESOVPZJAYQUIRHXLNFTGKDCMWB',
+    turnover: 'J'
+  },
+  V: {
+    encoding: 'VZBRGITYUPSDNHLXAWMJQOFECK',
+    turnover: 'Z'
+  }
+}
+
+const reflectorTypes = {
+  B: 'YRUHQSLDPXNGOKMIEBFZCWVJAT',
+  C: 'FVPJIAOYEDRZXWGCTKUQSBNMHL'
+}
 
 class Rotor {
-  constructor(encoding, turnover, ringSetting, position) {
-    this.ring = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    this.alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    this.encoding = encoding;
-    this.decoding = "";
-    for (var i = 0; i < ALPHA.length; i++) {
-      this.decoding += numToAlpha(encoding.indexOf(ALPHA[i]))
+  constructor(rotorType, ringSetting, position) {
+    this.ring = ALPHABET.slice(ringSetting) + ALPHABET.slice(0, ringSetting);
+
+    this.alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+    this.encoding = rotorTypes[rotorType].encoding;
+    this.decoding = '';
+    for (var i = 0; i < 26; i++) {
+      this.decoding += numToAlpha(this.encoding.indexOf(ALPHABET[i]))
     }
-    this.turnover = turnover;
+    this.turnover = rotorTypes[rotorType].turnover;
     this.ringSetting = ringSetting;
     this.position = position;
+
+    this.cycle(position - ringSetting);
   }
 
-  // TODO: Cycle ring to correct position
-  // TODO: Take ring setting into account
+  cycle(n) {
+    this.ring = this.ring.slice(n) + this.ring.slice(0, n);
+    this.alpha = this.alpha.slice(n) + this.alpha.slice(0, n);
+    this.encoding = this.encoding.slice(n) + this.encoding.slice(0, n);
+    this.decoding = this.decoding.slice(n) + this.decoding.slice(0, n);
+    this.position += n;
+  }
 
-  cycle() {
-    this.ring = this.ring.slice(1) + this.ring.slice(0, 1);
-    this.alpha = this.alpha.slice(1) + this.alpha.slice(0, 1);
-    this.encoding = this.encoding.slice(1) + this.encoding.slice(0, 1);
-    this.decoding = this.decoding.slice(1) + this.decoding.slice(0, 1);
-    this.position++;
+  position(position) {
+    this.cycle(position - this.ringSetting);
+  }
+
+  ringSetting(ringSetting) {
+    this.ring = ALPHABET.slice(ringSetting) + ALPHABET.slice(0, ringSetting);
   }
 }
 
 class EnigmaMachine {
-  constructor(plugboard, rotors, reflector) {
-    this.plugboard = plugboard;
-    this.rotors = rotors;
-    this.reflector = reflector;
+  constructor(rotors = ['III','II','I'], positions = [0,0,0], ringSettings = [0,0,0], reflector = 'B', plugboardPairs = []) {
+    this.plugboard = this.generatePlugboard(plugboardPairs);
+    this.rotors = [];
+    rotors.forEach((r, i) => {
+      this.rotors.push(new Rotor(r, ringSettings[i], positions[i]));
+    });
+    this.reflector = reflectorTypes[reflector];
+  }
+
+  generatePlugboard(pairs) {
+    var pb = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    pairs.forEach((p) => {
+      pb = pb.slice(0, alphaToNum(p[0])) + p[1] + pb.slice(alphaToNum(p[0]) + 1);
+      pb = pb.slice(0, alphaToNum(p[1])) + p[0] + pb.slice(alphaToNum(p[1]) + 1);
+    })
+    return pb;
   }
 
   encodeChar(c) {
@@ -49,26 +100,26 @@ class EnigmaMachine {
     let nextInput = this.plugboard.indexOf(c)
 
     // through each rotor
-    for (let i = 0; i < this.rotors.length; i++) {
-      let outputChar = rotors[i].encoding[nextInput];
+    for (let i = this.rotors.length - 1; i >= 0; i--) {
+      let outputChar = this.rotors[i].encoding[nextInput];
       console.log(outputChar);
-      nextInput = rotors[i].alpha.indexOf(outputChar);
+      nextInput = this.rotors[i].alpha.indexOf(outputChar);
     }
 
     // reflected
     let outputChar = this.reflector[nextInput];
     console.log(outputChar);
-    nextInput = ALPHA.indexOf(outputChar);
+    nextInput = ALPHABET.indexOf(outputChar);
 
     // through each rotor again
-    for (let i = this.rotors.length - 1; i >= 0; i--) {
-      let outputChar = rotors[i].decoding[nextInput];
+    for (let i = 0; i < this.rotors.length; i++) {
+      let outputChar = this.rotors[i].decoding[nextInput];
       console.log(outputChar);
-      nextInput = rotors[i].alpha.indexOf(outputChar);
+      nextInput = this.rotors[i].alpha.indexOf(outputChar);
     }
 
     // output
-    return ALPHA[nextInput];
+    return ALPHABET[nextInput];
 
   }
 
@@ -85,40 +136,30 @@ class EnigmaMachine {
     // Assumes 3 rotors for now
     // TODO: Make it work for the M4 Naval Enigma Machine
     // NB: The fourth rotor on the M4 didn't move anyway?
-    if (this.rotors[1].alpha[0] === this.rotors[1].turnover) {
+    if (this.rotors[1].ring[2] === this.rotors[1].turnover) {
       // if the second rotor is at the turnover position, it turns itself and the third rotor
       // This is the source of the "double step" of the middle rotor
-      this.rotors[1].cycle();
-      this.rotors[2].cycle();
+      this.rotors[1].cycle(1);
+      this.rotors[2].cycle(1);
 
       // the first rotor always turns
-      this.rotors[0].cycle();
-    } else if (this.rotors[0].alpha[0] === this.rotors[0].turnover) {
+      this.rotors[2].cycle(1);
+    } else if (this.rotors[2].ring[2] === this.rotors[2].turnover) {
       // If the first rotor is at the turnover position, it turns the second rotor too
-      this.rotors[0].cycle(1);
+      this.rotors[2].cycle(1);
       this.rotors[1].cycle(1);
     } else {
       // The first rotor always turns
-      this.rotors[0].cycle(1);
+      this.rotors[2].cycle(1);
     }
+  }
+
+  setPosition(positions) {
+
   }
 
 }
 
-var plugboard = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-var rotorI = new Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q", 0, 0);
-var rotorII = new Rotor("AJDKSIRUXBLHWTMCQGZNPYFVOE", "E", 0, 0);
-var rotorIII = new Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "V", 0, 0);
-
-var rotors = [
-  rotorI,
-  rotorII,
-  rotorIII
-];
-
-var reflector = "YRUHQSLDPXNGOKMIEBFZCWVJAT";
-
-let em = new EnigmaMachine(plugboard, rotors, reflector);
-
-console.log(em.encodeString('ABC'));
+module.exports = (rotors, positions, ringSettings, reflector, ...plugboardPairs) => {
+  return new EnigmaMachine(rotors, positions, ringSettings, reflector, plugboardPairs);
+}
