@@ -1,10 +1,10 @@
 {
-  "name": "enigmajs",
+  "name": "enigma-simulator",
   "version": "1.0.0",
   "description": "An Enigma Machine Simulator",
   "main": "index.js",
   "author": "Tim Fogarty <tim@tfogo.com>",
-  "repository": "tfogo/enigmajs",
+  "repository": "tfogo/enigma-simulator",
   "license": "MIT",
   "engines": ">= 7.4.0"
 }
