@@ -4,7 +4,7 @@
   "description": "An Enigma Machine Simulator",
   "main": "index.js",
   "author": "Tim Fogarty <tim@tfogo.com>",
-  "repository": "expressjs/express",
+  "repository": "tfogo/enigmajs",
   "license": "MIT",
   "engines": ">= 7.4.0"
 }
