@@ -20,7 +20,7 @@ em.encodeString('ABC'); // 'FUV'
 // Create an Enigma machine with your own settings
 // rotors, positions, ringSettings, reflector, ...plugboardPairs
 var em2 = enigma(['IV', 'I', 'III'], [3, 5, 20], [7, 12, 14], 'C', 'AS', 'TH', 'LR');
-em.encodeString('ABC'); // 'IRD'
+em2.encodeString('ABC'); // 'IRD'
 ```
 
 - Available rotors: I, II, III, IV, V
