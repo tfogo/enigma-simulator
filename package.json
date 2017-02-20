@@ -6,5 +6,11 @@
   "author": "Tim Fogarty <tim@tfogo.com>",
   "repository": "tfogo/enigma-simulator",
   "license": "MIT",
-  "engines": ">= 7.4.0"
+  "engines": ">= 7.4.0",
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0"
+  }
 }
