@@ -37,12 +37,16 @@ m4.encodeString('ABC'); // 'BPF'
 
 ## Documentation
 
-### \#constructor()
+### enigma()
 
 #### Syntax
 ```
-new Enigma(rotors, positions, ringSettings, reflector, plugboardPairs)
+enigma(rotors, positions, ringSettings, reflector, plugboardPairs)
 ```
+
+#### Output
+
+Returns an instance of `EnigmaMachine`.
 
 #### Parameters
 
@@ -82,13 +86,17 @@ Defaults to `'B'`.
 
 **plugboardPairs** Optional. A string containing a list of pairs of letters separated by spaces. This represents the letters that should be switched on the plugboard (or Steckerbrett). Defaults to an empty string (no substitutions).
 
-### \#encodeString()
+### EnigmaMachine.encodeString()
 
 #### Syntax
 
 ```
 enigmaMachine.encodeString(text)
 ```
+
+#### Output
+
+Returns a string which is the encoding/decoding of `text`.
 
 #### Parameters
 
