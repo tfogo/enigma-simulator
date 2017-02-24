@@ -8,10 +8,10 @@ npm install enigma-simulator
 
 ## Example Usage
 
-Require the `enigma-machine` module:
+Require the `enigma-simulator` module:
 
 ```js
-var enigma = require('enigma-machine');
+var enigma = require('enigma-simulator');
 ```
 
 Create a Wehrmacht Enigma I Machine with a B reflector and rotors III, II, I with default positions and ring settings:
