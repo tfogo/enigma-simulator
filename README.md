@@ -105,3 +105,7 @@ Returns a string which is the encoding/decoding of `text`.
 ## Learn More
 
 A good introduction to the Enigma Machine is this [Numberphile video](https://www.youtube.com/watch?v=G2_Q9FoD-oQ). You can find out more about the details of the inner workings of the machine on [Dirk Rijmenants' website](http://users.telenet.be/d.rijmenants/en/enigmatech.htm). One of the more complex quirks of the Enigma Machine's mechanism is the "double step". You can see this in action in [this video](https://www.youtube.com/watch?v=hcVhQeZ5gI4).
+
+## Contributors 🎉
+
+[mrpjevans](https://github.com/mrpjevans)
