@@ -53,6 +53,9 @@ class EnigmaMachine {
       nextInput = this.rotors[i].alpha.indexOf(outputChar);
     }
 
+    // mrpjevans: Final pass through the plugboard
+    nextInput = this.plugboard.indexOf(ALPHABET[nextInput]);
+
     // output
     //console.log(ALPHABET[nextInput] + '/n');
     return ALPHABET[nextInput];
