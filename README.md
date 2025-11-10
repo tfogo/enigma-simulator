@@ -80,7 +80,7 @@ Defaults to `[III, II, I]`.
 | `'B'` | YRUHQSLDPXNGOKMIEBFZCWVJAT |  |
 | `'C'` | FVPJIAOYEDRZXWGCTKUQSBNMHL |  |
 | `'BThin'` | ENKQAUYWJICOPBLMDXZVFTHRGS | Kriegsmarine M4 |
-| `'BThin'` | RDOBJNTKVEHMLFCWZAXGYIPSUQ | Kriegsmarine M4 |
+| `'CThin'` | RDOBJNTKVEHMLFCWZAXGYIPSUQ | Kriegsmarine M4 |
 
 Defaults to `'B'`.
 
