@@ -120,7 +120,7 @@ describe('M4 Enigma Machine with default settings', () => {
         em1.cycleRotors();
       }
       let rotors = [
-        new Rotor('VII', 0, 26),
+        new Rotor('VII', 0, 0),
         new Rotor('II', 0, 2),
         new Rotor('III', 0, 0),
         new Rotor('Gamma', 0, 0)

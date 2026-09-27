@@ -1,0 +1,83 @@
+[
+  {
+    "id": "crypto-museum-working",
+    "title": "Enigma explained",
+    "institution": "Crypto Museum",
+    "url": "https://www.cryptomuseum.com/crypto/enigma/working.htm",
+    "accessed": "2026-09-27",
+    "type": "museum technical explanation",
+    "locators": [
+      "Rotor stepping",
+      "Double stepping of the middle rotor",
+      "The Steckerbrett"
+    ],
+    "claims": [
+      "The electrical circuit is activated after stepping",
+      "On these military rotors the turnover notch follows the index ring",
+      "III-II-I windows progress ADO, ADP, ADQ, AER, BFS, BFT, BFU",
+      "The plugboard physically supports up to thirteen disjoint pairs"
+    ],
+    "notes": "The page gives a period of 16926. We do not adopt that claim: the specialist Enigma Variations paper gives 16900, agreeing with complete cycle enumeration. Retain the page for the individually checked stepping sequence and other listed claims."
+  },
+  {
+    "id": "py-enigma-guide",
+    "title": "Py-Enigma user's guide",
+    "institution": "Py-Enigma project",
+    "url": "https://py-enigma.readthedocs.io/en/latest/guide.html",
+    "accessed": "2026-09-27",
+    "type": "independent simulator documentation",
+    "locators": [
+      "Example communication procedure"
+    ],
+    "claims": [
+      "II-IV-V, rings BUL, listed plugs: WXC encodes BLA as KCH",
+      "At BLA the example body encodes as NIBLFMYMLLUFWCASCSSNVHAZ"
+    ],
+    "notes": "Used as a published known-answer example, not as a wartime transcript or authority for every historical claim on the page. Fixture locators retain the exact settings."
+  },
+  {
+    "id": "m4-first-break",
+    "title": "First break of the M4 Project",
+    "author": "Stefan Krah; page credits Ralph Erskine, Dan Girard and Frode Weierud",
+    "url": "https://www.bytereef.org/m4-project-first-break.html",
+    "accessed": "2026-09-27",
+    "type": "research project result with historical message transcription",
+    "locators": [
+      "Ciphertext (stripped of indicator groups)",
+      "Plaintext (as seen in the server logs), 2006-02-20 11:02:26"
+    ],
+    "claims": [
+      "The published raw message decrypts with thin B, Beta-II-IV-I, rings AAAV, windows VJNA and the listed plugs"
+    ],
+    "notes": "The test uses raw recovered text, including irregular spelling, not the page's interpreted or translated message. The cited wartime diary has not been independently inspected."
+  },
+  {
+    "id": "crypto-museum-m4",
+    "title": "Enigma M4",
+    "institution": "Crypto Museum",
+    "url": "https://www.cryptomuseum.com/crypto/enigma/m4/index.htm",
+    "accessed": "2026-09-27",
+    "type": "museum machine documentation",
+    "locators": [
+      "Reflector"
+    ],
+    "claims": [
+      "At reference alignment Beta/thin-B and Gamma/thin-C reproduce thick B and C respectively"
+    ]
+  },
+  {
+    "id": "enigma-variations",
+    "title": "Enigma Variations: An Extended Family of Machines",
+    "author": "David H. Hamer, Geoff Sullivan and Frode Weierud",
+    "url": "https://cryptocellar.org/pubs/enigvar.pdf",
+    "accessed": "2026-09-27",
+    "type": "specialist research paper, author-hosted version",
+    "locators": [
+      "PDF page 6, The Multiple Turnover Machines, first paragraph"
+    ],
+    "claims": [
+      "A single-notch three-wheel Enigma with Enigma stepping has period 16900"
+    ],
+    "notes": "Resolves the discrepancy with the Crypto Museum working-principle page. The test independently enumerates one full cycle from AAA."
+  }
+]

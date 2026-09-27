@@ -1,10 +1,8 @@
 const assert = require('assert');
 const Rotor = require('../src/rotor.js');
 
-var rotor;
-
 describe('Rotor', () => {
-  describe('#clyce()', () => {
+  describe('#cycle()', () => {
     let rotor = new Rotor('I', 0, 0);
     rotor.cycle(1);
     it('should rotate the ring 1 position', () => {
@@ -27,8 +25,10 @@ describe('Rotor', () => {
   describe('#setRingSetting()', () => {
     let rotor = new Rotor('I', 0, 0);
     rotor.setRingSetting(1);
-    it('should rotate the ring by the ringSetting', () => {
-      assert.equal('BCDEFGHIJKLMNOPQRSTUVWXYZA', rotor.ring);
+    it('should change the wiring offset while preserving the window', () => {
+      assert.equal('ABCDEFGHIJKLMNOPQRSTUVWXYZ', rotor.ring);
+      assert.equal(1, rotor.ringSetting);
+      assert.equal('ZABCDEFGHIJKLMNOPQRSTUVWXY', rotor.alpha);
     });
   });
 

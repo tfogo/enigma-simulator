@@ -1,44 +1,76 @@
-const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+'use strict';
 
+const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const rotorTypes = require('./rotorTypes');
+const { setting } = require('./validation');
+const mod26 = n => ((n % 26) + 26) % 26;
+const rotate = (text, offset) => text.slice(offset) + text.slice(0, offset);
 
-
-function numToAlpha(i) {
-  return String.fromCharCode(i + 65);
-}
+// Wiring never changes; only window position and ring offset change.
+const wirings = Object.fromEntries(Object.entries(rotorTypes).map(([name, type]) => {
+  const forward = Array.from(type.encoding, c => ALPHABET.indexOf(c));
+  const reverse = Array(26);
+  forward.forEach((output, input) => { reverse[output] = input; });
+  return [name, Object.freeze({
+    forward: Object.freeze(forward),
+    reverse: Object.freeze(reverse),
+    turnover: type.turnover,
+  })];
+}));
+Object.freeze(wirings);
 
 class Rotor {
-  constructor(rotorType, ringSetting, position) {
-    this.ring = ALPHABET.slice(ringSetting) + ALPHABET.slice(0, ringSetting);
-
-    this.alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-    this.encoding = rotorTypes[rotorType].encoding;
-    this.decoding = '';
-    for (var i = 0; i < 26; i++) {
-      this.decoding += numToAlpha(this.encoding.indexOf(ALPHABET[i]))
+  constructor(rotorType, ringSetting = 0, position = 0) {
+    if (typeof rotorType !== 'string' || !Object.hasOwn(wirings, rotorType)) {
+      throw new TypeError(`Unknown rotor type: ${String(rotorType)}`);
     }
-    this.turnover = rotorTypes[rotorType].turnover;
+    setting(ringSetting, 'ringSetting');
+    setting(position, 'position');
+    this.rotorType = rotorType;
     this.ringSetting = ringSetting;
-    this.position = 0;
-
-    this.cycle(position - ringSetting);
+    this.position = position;
   }
 
-  cycle(n) {
-    this.ring = this.ring.slice(n) + this.ring.slice(0, n);
-    this.alpha = this.alpha.slice(n) + this.alpha.slice(0, n);
-    this.encoding = this.encoding.slice(n) + this.encoding.slice(0, n);
-    this.decoding = this.decoding.slice(n) + this.decoding.slice(0, n);
-    this.position += n;
+  get offset() { return mod26(this.position - this.ringSetting); }
+  get turnover() { return wirings[this.rotorType].turnover; }
+  get ring() { return rotate(ALPHABET, this.position); }
+  get alpha() { return rotate(ALPHABET, this.offset); }
+
+  // Read-only legacy inspection views, derived from normalized state.
+  get encoding() {
+    return rotate(wirings[this.rotorType].forward.map(n => ALPHABET[n]).join(''), this.offset);
+  }
+
+  get decoding() {
+    return rotate(wirings[this.rotorType].reverse.map(n => ALPHABET[n]).join(''), this.offset);
+  }
+
+  forward(contact) {
+    return mod26(wirings[this.rotorType].forward[mod26(contact + this.offset)] - this.offset);
+  }
+
+  backward(contact) {
+    return mod26(wirings[this.rotorType].reverse[mod26(contact + this.offset)] - this.offset);
+  }
+
+  atNotch() {
+    return this.turnover.includes(ALPHABET[this.position]);
+  }
+
+  cycle(n = 1) {
+    if (!Number.isSafeInteger(n)) throw new TypeError('step count must be a safe integer');
+    this.position = mod26(this.position + mod26(n));
   }
 
   setPosition(position) {
-    this.cycle(position - this.ringSetting);
+    setting(position, 'position');
+    this.position = position;
   }
 
   setRingSetting(ringSetting) {
-    this.ring = ALPHABET.slice(ringSetting) + ALPHABET.slice(0, ringSetting);
+    setting(ringSetting, 'ringSetting');
+    // Adjust wiring relative to the index ring without changing the window.
+    this.ringSetting = ringSetting;
   }
 }
 

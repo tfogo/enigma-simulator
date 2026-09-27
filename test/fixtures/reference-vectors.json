@@ -1,0 +1,81 @@
+[
+  {
+    "id": "py-enigma-message-key",
+    "source": "py-enigma-guide",
+    "locator": "Example communication procedure: WXC / BLA / KCH",
+    "kind": "published teaching example, not an authentic wartime transcript",
+    "rotors": [
+      "II",
+      "IV",
+      "V"
+    ],
+    "positions": [
+      22,
+      23,
+      2
+    ],
+    "ringSettings": [
+      1,
+      20,
+      11
+    ],
+    "reflector": "B",
+    "plugboard": "AV BS CG DL FU HZ IN KM OW RX",
+    "plaintext": "BLA",
+    "ciphertext": "KCH"
+  },
+  {
+    "id": "py-enigma-message-body",
+    "source": "py-enigma-guide",
+    "locator": "Example communication procedure: BLA / message body",
+    "kind": "published teaching example, not an authentic wartime transcript",
+    "rotors": [
+      "II",
+      "IV",
+      "V"
+    ],
+    "positions": [
+      1,
+      11,
+      0
+    ],
+    "ringSettings": [
+      1,
+      20,
+      11
+    ],
+    "reflector": "B",
+    "plugboard": "AV BS CG DL FU HZ IN KM OW RX",
+    "plaintext": "THEXRUSSIANSXAREXCOMINGX",
+    "ciphertext": "NIBLFMYMLLUFWCASCSSNVHAZ"
+  },
+  {
+    "id": "m4-project-first-break",
+    "source": "m4-first-break",
+    "locator": "Ciphertext stripped of indicators; server result 2006-02-20 11:02:26",
+    "kind": "historical intercepted message; raw recovered text, not editorially corrected German",
+    "notes": "Source B241 means Beta, II, IV, I with thin B. AAAV rings and VJNA windows converted to zero-based indices. Uppercased and line breaks removed; no other corrections.",
+    "rotors": [
+      "Beta",
+      "II",
+      "IV",
+      "I"
+    ],
+    "positions": [
+      21,
+      9,
+      13,
+      0
+    ],
+    "ringSettings": [
+      0,
+      0,
+      0,
+      21
+    ],
+    "reflector": "BThin",
+    "plugboard": "AT BL DF GJ HM NW OP QY RZ VX",
+    "plaintext": "VONVONJLOOKSJHFFTTTEINSEINSDREIZWOYYQNNSNEUNINHALTXXBEIANGRIFFUNTERWASSERGEDRUECKTYWABOSXLETZTERGEGNERSTANDNULACHTDREINULUHRMARQUANTONJOTANEUNACHTSEYHSDREIYZWOZWONULGRADYACHTSMYSTOSSENACHXEKNSVIERMBFAELLTYNNNNNNOOOVIERYSICHTEINSNULL",
+    "ciphertext": "NCZWVUSXPNYMINHZXMQXSFWXWLKJAHSHNMCOCCAKUQPMKCSMHKSEINJUSBLKIOSXCKUBHMLLXCSJUSRRDVKOHULXWCCBGVLIYXEOAHXRHKKFVDREWEZLXOBAFGYUJQUKGRTVUKAMEURBVEKSUHHVOYHABCJWMAKLFKLMYFVNRIZRVVRTKOFDANJMOLBGFFLEOPRGTFLVRHOWOPBEKVWMUQFMPWPARMFHAGKXIIBG"
+  }
+]
