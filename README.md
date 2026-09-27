@@ -192,3 +192,22 @@ A good introduction to the Enigma Machine is this [Numberphile video](https://ww
 ## Contributors 🎉
 
 [mrpjevans](https://github.com/mrpjevans)
+
+## Interactive field guide (prototype)
+
+The `web/` frontend includes a first guided lesson, an Enigma I/M3/M4 workbench, a signal inspector, and sourced History and Reference views.
+
+```sh
+npm ci --ignore-scripts
+npm run dev
+```
+
+Open `http://127.0.0.1:5173`. To verify the production frontend:
+
+```sh
+npm run build:web
+npx playwright install chromium
+npm run test:web
+```
+
+`npm run preview` serves the production build on port 4173. The static output is `web/dist/`. Machine and lesson state currently last only until reload; messages are limited to 80 letters. Frontend dependencies are development-only and are excluded from the library's runtime package. See [the prototype decisions](docs/decisions/0003-frontend-prototype.md) for behavior and remaining review work.

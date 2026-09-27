@@ -116,5 +116,54 @@
       "The message body at ABL reproduces the published 84-letter ciphertext"
     ],
     "notes": "Source points to British National Archives HW25/9. We checked the web transcription, not the archival document. Fixture preserves raw spelling and excludes the indicator from the body."
+  },
+  {
+    "id": "crypto-museum-k",
+    "title": "Enigma K",
+    "institution": "Crypto Museum",
+    "url": "https://www.cryptomuseum.com/crypto/enigma/k/index.htm",
+    "accessed": "2026-09-27",
+    "type": "museum collection",
+    "locators": [
+      "Introduction and standard version"
+    ],
+    "claims": [
+      "Commercial Enigma K introduced in 1927",
+      "Three cipher rotors and a manually settable reflector"
+    ],
+    "notes": "Supports the prototype commercial-history card, not simulation of this model."
+  },
+  {
+    "id": "gchq-pyry",
+    "title": "The Pyry Forest Meeting",
+    "institution": "GCHQ",
+    "url": "https://www.gchq.gov.uk/information/the-pyry-forest-meeting",
+    "accessed": "2026-09-27",
+    "type": "institutional historical account",
+    "locators": [
+      "Opening account and 1939 exchange"
+    ],
+    "claims": [
+      "Polish cryptanalysts shared their work with French and British colleagues in July 1939",
+      "The exchange transformed the British approach"
+    ],
+    "notes": "Published 21 July 2020; used as a retrospective institutional account."
+  },
+  {
+    "id": "tnmoc-bombe",
+    "title": "The Turing-Welchman Bombe",
+    "institution": "The National Museum of Computing",
+    "url": "https://www.tnmoc.org/bombe",
+    "accessed": "2026-09-27",
+    "type": "museum explanation",
+    "locators": [
+      "The Bombe",
+      "Reconstructing the Bombe"
+    ],
+    "claims": [
+      "The Bombe helped search for Enigma key settings",
+      "The museum displays a working reconstruction"
+    ],
+    "notes": "Used only for the listed claims; do not adopt the page’s loose prewar chronology as authority for dates of Polish breakthroughs."
   }
 ]

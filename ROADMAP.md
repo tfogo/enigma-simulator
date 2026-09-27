@@ -1,6 +1,6 @@
 # Enigma Simulator: implementation and learning roadmap
 
-Status: implementation underway, 27 September 2026. M0–M2 are implemented and locally verified; M3 (UX prototype and visual system) is next. CI configuration is added but has not run remotely. No release has been published.
+Status: implementation underway, 27 September 2026. M0–M2 are implemented and locally verified; M3 has a working desktop/mobile prototype awaiting user review. CI configuration is added but has not run remotely. No release has been published.
 
 ## 1. Product direction
 
@@ -247,12 +247,12 @@ Verified locally: 110 runtime tests plus strict TypeScript consumer checks on No
 
 ### M3 — UX prototype and visual system (medium; can overlap M1–M2)
 
-- [ ] Sketch Learn, Explore, History, and Reference navigation for desktop and mobile.
-- [ ] Prototype one complete keypress and one short lesson with representative content.
-- [ ] Choose a readable machine-inspired visual style, typography, signal colors, and diagram conventions.
-- [ ] Show both signal directions with labels and shapes as well as color.
-- [ ] Design rotor/ring controls, plugboard editing, errors, starting/current states, and reset.
-- [ ] Define focus order, keyboard operations, reduced-motion behavior, and textual alternatives.
+- [x] Sketch Learn, Explore, History, and Reference navigation for desktop and mobile.
+- [x] Prototype one complete keypress and one short lesson with representative content.
+- [x] Choose a readable machine-inspired visual style, typography, signal colors, and diagram conventions.
+- [x] Show both signal directions with labels and shapes as well as color.
+- [x] Design rotor/ring controls, plugboard editing, errors, starting/current states, and reset.
+- [x] Define focus order, keyboard operations, reduced-motion behavior, and textual alternatives.
 - [ ] Review with the user before expanding into the full interface.
 
 Done when: the intended beginner interaction and advanced controls are concrete and reviewable at both screen sizes.
@@ -367,7 +367,7 @@ Resolve decisions when their milestone needs them:
 | Hosting/domain/publication | Select after a working production preview exists | M6 |
 | Historical extensions | K/Swiss-K first, then UKW-D/Uhr/G | M8 |
 
-M0–M1 implementation is recorded in [the foundation decision](docs/decisions/0001-engine-foundation.md), and M2 in [the configuration and trace decision](docs/decisions/0002-configuration-and-traces.md). The next implementation task is M3: a reviewable desktop/mobile UX prototype, a complete keypress interaction, and one short lesson. Historical content research can progress alongside that milestone. Revisit this document after each milestone and turn its remaining checkboxes into implementation tasks as needed.
+M0–M1 implementation is recorded in [the foundation decision](docs/decisions/0001-engine-foundation.md), and M2 in [the configuration and trace decision](docs/decisions/0002-configuration-and-traces.md). The M3 prototype now provides those interactions; see [the frontend decision](docs/decisions/0003-frontend-prototype.md). Review it before expanding into M4. Historical content research can progress alongside that milestone. Revisit this document after each milestone and turn its remaining checkboxes into implementation tasks as needed.
 
 ## 11. Starting bibliography
 
