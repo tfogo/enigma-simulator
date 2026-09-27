@@ -15,15 +15,22 @@ export default function Machine({
   onKey,
   learning,
   grouped = false,
+  playbackStage,
 }: {
   session: Session;
   dispatch: Dispatch<Action>;
   onKey: (letter: string) => void;
   learning: boolean;
   grouped?: boolean;
+  playbackStage?: number;
 }) {
   const { configuration: config, state } = session.snapshot;
   const last = session.entries.at(-1)?.trace;
+  const pending =
+    !!last && playbackStage !== undefined && playbackStage < last.stages.length;
+  const windows =
+    last && playbackStage === -1 ? last.positionsBefore : state.positions;
+  const lamp = pending ? undefined : last?.output;
   const plaintext = session.entries.map((e) => e.trace.input).join("");
   const ciphertext = session.entries.map((e) => e.trace.output).join("");
   return (
@@ -39,26 +46,39 @@ export default function Machine({
           </span>
           <span className="ready">
             <i />
-            {last ? "CIRCUIT COMPLETE" : "READY TO ENCODE"}
+            {pending
+              ? "FOLLOWING KEYPRESS"
+              : last
+                ? "CIRCUIT COMPLETE"
+                : "READY TO ENCODE"}
           </span>
         </div>
         <div
           className="rotor-bank"
           role="group"
-          aria-label={`Current windows ${letters(state.positions)}`}
+          aria-label={`${pending ? "Playback" : "Current"} windows ${letters(windows)}`}
         >
           {config.rotors.map((rotor, i) => (
             <div className="rotor" key={i}>
               <span className="rotor-name">{rotor}</span>
               <div
-                className={`rotor-window ${last?.stepping[i].moved ? "moved" : ""}`}
+                className={`rotor-window ${playbackStage !== -1 && last?.stepping[i].moved ? "moved" : ""}`}
               >
                 <span className="ghost-letter" aria-hidden="true">
-                  {alphabet[(state.positions[i] + 25) % 26]}
+                  {alphabet[(windows[i] + 25) % 26]}
                 </span>
-                <strong>{alphabet[state.positions[i]]}</strong>
+                <strong
+                  key={windows[i]}
+                  className={
+                    playbackStage === 0 && last?.stepping[i].moved
+                      ? "stepping-letter"
+                      : undefined
+                  }
+                >
+                  {alphabet[windows[i]]}
+                </strong>
                 <span className="ghost-letter" aria-hidden="true">
-                  {alphabet[(state.positions[i] + 1) % 26]}
+                  {alphabet[(windows[i] + 1) % 26]}
                 </span>
               </div>
               <span className="rotor-detail">
@@ -73,21 +93,21 @@ export default function Machine({
         </div>
         <div className="machine-rule">
           <span>LAMPBOARD</span>
-          <span>{last ? `${last.input} → ${last.output}` : "OUTPUT"}</span>
+          <span>
+            {last ? `${last.input} → ${pending ? "…" : last.output}` : "OUTPUT"}
+          </span>
         </div>
         <div
           className="lampboard"
           role="group"
-          aria-label={
-            last ? `Output lamp ${last.output}` : "No output lamp lit"
-          }
+          aria-label={lamp ? `Output lamp ${lamp}` : "No output lamp lit"}
         >
           {rows.map((row) => (
             <div className="key-row" key={row}>
               {[...row].map((letter) => (
                 <span
                   aria-hidden="true"
-                  className={`lamp ${last?.output === letter ? "lit" : ""}`}
+                  className={`lamp ${lamp === letter ? "lit" : ""}`}
                   key={letter}
                 >
                   {letter}

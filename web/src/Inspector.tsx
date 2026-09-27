@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import type { Playback } from "./usePlayback";
 import type enigma from "enigma-simulator";
 import { alphabet, letters } from "./session";
 
@@ -9,23 +9,16 @@ const reasonText: Record<enigma.StepReason, string> = {
   "no-turnover": "stays in place",
   stationary: "is set by hand and stays in place",
 };
-export default function Inspector({ trace }: { trace?: enigma.Trace }) {
-  const [active, setActive] = useState(0);
-  const [playing, setPlaying] = useState(false);
-  useEffect(() => {
-    setActive(0);
-    setPlaying(false);
-  }, [trace]);
+export default function Inspector({
+  trace,
+  playback,
+}: {
+  trace?: enigma.Trace;
+  playback: Playback;
+}) {
+  const { active, playing } = playback;
   const length = trace?.stages.length ?? 0;
-  useEffect(() => {
-    if (!playing || !trace) return;
-    if (active >= length) {
-      setPlaying(false);
-      return;
-    }
-    const timer = window.setTimeout(() => setActive((n) => n + 1), 700);
-    return () => window.clearTimeout(timer);
-  }, [playing, active, length, trace]);
+  const guided = playback.mode === "guided";
   const stage = trace?.stages[active - 1];
   const columns = trace
     ? [...trace.stages.filter((s) => s.direction === "forward")].reverse()
@@ -42,7 +35,9 @@ export default function Inspector({ trace }: { trace?: enigma.Trace }) {
           <h2 id="inspector-title">Follow the signal</h2>
         </div>
         <span className="tag">
-          {trace ? `${trace.input} → ${trace.output}` : "ONE KEYPRESS"}
+          {trace
+            ? `${trace.input} → ${guided && active < length ? "…" : trace.output}`
+            : "ONE KEYPRESS"}
         </span>
       </div>
       {!trace ? (
@@ -66,7 +61,7 @@ export default function Inspector({ trace }: { trace?: enigma.Trace }) {
             <svg
               viewBox={`0 0 ${width} 154`}
               role="img"
-              aria-label={`Circuit for ${trace.input} to ${trace.output}. The signal goes through the rotors to the reflector and back.`}
+              aria-label={`Circuit for key ${trace.input}. The signal goes through the rotors to the reflector and back. Current stage: ${active < 1 ? "rotor movement" : active}.`}
             >
               <defs>
                 <marker
@@ -116,6 +111,11 @@ export default function Inspector({ trace }: { trace?: enigma.Trace }) {
                     s.componentId === item.componentId &&
                     s.direction === "return",
                 );
+                const forwardSeen =
+                  !guided || active >= trace.stages.indexOf(item) + 1;
+                const returnSeen =
+                  !guided ||
+                  (returning && active >= trace.stages.indexOf(returning) + 1);
                 return (
                   <g key={item.componentId}>
                     <rect
@@ -158,7 +158,9 @@ export default function Inspector({ trace }: { trace?: enigma.Trace }) {
                       textAnchor="middle"
                       className="svg-contact forward"
                     >
-                      {item.outputLetter} ← {item.inputLetter}
+                      {forwardSeen
+                        ? `${item.outputLetter} ← ${item.inputLetter}`
+                        : "… ← …"}
                     </text>
                     <text
                       x={x + 41}
@@ -167,7 +169,9 @@ export default function Inspector({ trace }: { trace?: enigma.Trace }) {
                       className="svg-contact returning"
                     >
                       {returning
-                        ? `${returning.inputLetter} → ${returning.outputLetter}`
+                        ? returnSeen
+                          ? `${returning.inputLetter} → ${returning.outputLetter}`
+                          : "… → …"
                         : "↳"}
                     </text>
                     {item.kind === "rotor" && (
@@ -177,7 +181,14 @@ export default function Inspector({ trace }: { trace?: enigma.Trace }) {
                         textAnchor="middle"
                         className="svg-label"
                       >
-                        WINDOW {alphabet[item.position]}
+                        WINDOW{" "}
+                        {
+                          alphabet[
+                            active < 0
+                              ? trace.positionsBefore[item.slot]
+                              : item.position
+                          ]
+                        }
                       </text>
                     )}
                   </g>
@@ -195,13 +206,15 @@ export default function Inspector({ trace }: { trace?: enigma.Trace }) {
           </div>
           <div className="trace-description" aria-live="polite">
             <span className="step-number">
-              {String(active + 1).padStart(2, "0")}
+              {String(active + 2).padStart(2, "0")}
             </span>
             <div>
               <h3>
                 {stage
                   ? `${stage.kind === "rotor" ? "Rotor " : ""}${stage.name}: ${stage.inputLetter} → ${stage.outputLetter}`
-                  : "First, the rotors move."}
+                  : active < 0
+                    ? "Before the rotors move."
+                    : "First, the rotors move."}
               </h3>
               <p>
                 {stage
@@ -214,48 +227,45 @@ export default function Inspector({ trace }: { trace?: enigma.Trace }) {
                         : stage.input === stage.output
                           ? "This letter has no plugboard cable, so it passes through unchanged."
                           : "A plugboard cable swaps this letter with its connected partner."
-                  : `${letters(trace.positionsBefore)} → ${letters(trace.positionsAfter)}. ${trace.stepping
-                      .filter((s) => s.moved)
-                      .map(
-                        (s) =>
-                          `Rotor ${s.rotor} ${s.reasons.map((r) => reasonText[r]).join(" and ")}`,
-                      )
-                      .join(". ")}.`}
+                  : active < 0
+                    ? `Windows ${letters(trace.positionsBefore)}. The key is pressed; rotor movement comes before the electrical circuit.`
+                    : `${letters(trace.positionsBefore)} → ${letters(trace.positionsAfter)}. ${trace.stepping
+                        .filter((s) => s.moved)
+                        .map(
+                          (s) =>
+                            `Rotor ${s.rotor} ${s.reasons.map((r) => reasonText[r]).join(" and ")}`,
+                        )
+                        .join(". ")}.`}
               </p>
             </div>
           </div>
           <div className="trace-controls">
-            <button
-              className="secondary"
-              onClick={() => {
-                if (active >= length) setActive(0);
-                setPlaying(!playing);
-              }}
-            >
+            <button className="secondary" onClick={playback.play}>
               {playing ? "Pause replay" : "Play replay"}
             </button>
             <button
               className="text-button"
-              onClick={() => {
-                setPlaying(false);
-                setActive((n) => Math.max(0, n - 1));
-              }}
-              disabled={active === 0}
+              onClick={playback.back}
+              aria-disabled={active === -1}
             >
               ← Back
             </button>
             <button
               className="text-button"
-              onClick={() => {
-                setPlaying(false);
-                setActive((n) => Math.min(length, n + 1));
-              }}
-              disabled={active === length}
+              onClick={playback.next}
+              aria-disabled={active === length}
             >
               Next connection →
             </button>
+            <button
+              className="text-button"
+              onClick={playback.finish}
+              aria-disabled={active === length}
+            >
+              Show result now
+            </button>
             <span className="tiny muted">
-              {active + 1} / {length + 1}
+              {active + 2} / {length + 2}
             </span>
           </div>
           <details className="trace-table">

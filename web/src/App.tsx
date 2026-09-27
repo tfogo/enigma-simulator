@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
 import Machine from "./Machine";
+import { usePlayback, type PlaybackMode } from "./usePlayback";
 import MessageTools from "./MessageTools";
 import SessionTools from "./SessionTools";
 import {
@@ -88,6 +89,11 @@ export default function App() {
     view === "Explore" && selectedEntry !== null
       ? explore.entries[selectedEntry]?.trace
       : session.entries.at(-1)?.trace;
+  const playback = usePlayback(
+    trace,
+    view === "Learn" || view === "Explore",
+    view,
+  );
   const lessonTrace = learn.entries.at(-1)?.trace;
   useEffect(() => {
     function receiveLink() {
@@ -429,11 +435,39 @@ export default function App() {
               </div>
             </aside>
             <div className="machine-column">
+              <div className="playback-options">
+                <label>
+                  Keypress display{" "}
+                  <select
+                    value={playback.mode}
+                    onChange={(event) =>
+                      playback.setMode(event.target.value as PlaybackMode)
+                    }
+                  >
+                    <option value="immediate">Immediate result</option>
+                    <option value="guided">Follow the keypress</option>
+                  </select>
+                </label>
+                <p className="tiny muted">
+                  {playback.mode === "guided"
+                    ? "Playback shows the latest keypress: first the rotors, then the circuit, then the lamp. Message text updates immediately. New input starts playback for the newest letter."
+                    : "Results appear immediately. Use the inspector below to replay any connection."}
+                  {playback.reduced && playback.mode === "guided"
+                    ? " Reduced motion is enabled: use Next connection or Play replay below to advance."
+                    : ""}
+                </p>
+              </div>
               <Machine
                 session={session}
                 dispatch={dispatch}
                 onKey={press}
                 learning={view === "Learn"}
+                playbackStage={
+                  playback.mode === "guided" &&
+                  trace === session.entries.at(-1)?.trace
+                    ? playback.active
+                    : undefined
+                }
                 grouped={view === "Explore" && grouped}
               />
               {view === "Explore" && (
@@ -448,7 +482,7 @@ export default function App() {
                   onGrouped={changeGrouping}
                 />
               )}
-              <Inspector trace={trace} />
+              <Inspector trace={trace} playback={playback} />
               {view === "Explore" && (
                 <SessionTools
                   session={explore}

@@ -214,3 +214,6 @@ npm run test:web
 
 
 To decipher a message, open its starting-settings link (or configure the same machine), paste the ciphertext into **Message to append**, check the preview, and append it. **Reset message** returns to that session’s starting windows. **Export current settings** saves a checkpoint; restoring it begins a fresh message at the saved live windows. Share links and exported settings contain no message text. See [the workflow decisions](docs/decisions/0004-message-workflows.md) for formats and validation.
+
+
+Choose **Follow the keypress** to see the rotors move before the signal reaches the lamp. **Play replay**, **Back**, **Next connection**, and **Show result now** control the inspector. The transcript updates immediately, while playback illustrates the latest letter. Reduced-motion preferences start guided playback paused. **Immediate result** keeps the fast interaction. See [playback behavior](docs/decisions/0005-guided-playback.md) and the [accessibility verification record](docs/accessibility-checks.md).
