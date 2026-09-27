@@ -1,6 +1,6 @@
 # Enigma Simulator: implementation and learning roadmap
 
-Status: implementation underway, 27 September 2026. M0–M2 are implemented and locally verified; M3 is reviewed; M4 message workflows, snapshot restoration, and sharing are implemented. Guided stepping/signal playback is also implemented; full manual screen-reader and physical-device checks remain. CI configuration is added but has not run remotely. No release has been published.
+Status: first learning release prepared locally, 27 September 2026. M0–M3 and the initial M4/M5 implementation are complete; manual assistive-technology/device checks and beginner sessions remain open. Internal citation review, cross-browser tests, packaging, and release documentation are prepared. Deployment and npm publication are deferred until the final user decision; remote CI has not run.
 
 ## 1. Product direction
 
@@ -298,13 +298,13 @@ The shared source registry and 1930 example are recorded in [the history decisio
 Depends on M5.
 
 - [ ] Complete engine, integration, accessibility, link, content, and packaging checks.
-- [ ] Validate source references and external links; audit historical claim coverage and provide a citation-correction route.
+- [x] Validate the initial source registry’s eleven external links, audit implemented historical claim coverage, and provide a citation-correction route. Dated results and limits are recorded.
 - [x] Verify a clean install/build and a browser import of the candidate package contents. `npm run test:package` installs the actual tarball into a temporary consumer and checks a production browser bundle; no package has been published.
-- [ ] Add screenshots, quick start, contribution guidance, source acknowledgements, and licensing files.
-- [ ] Check rights for all included media and document attribution requirements.
+- [x] Add screenshots, quick start, contribution guidance, source acknowledgements, and licensing files.
+- [x] Inventory included media and record attribution requirements; no third-party photographs/scans are copied. See `docs/media-and-attribution.md`.
 - [ ] Choose hosting, preview the production build, and verify direct navigation/deep links.
 - [ ] Decide versioning for changed behavior, prepare release notes, and agree publishing details before deployment/npm publication.
-- [ ] Record release-specific known limitations. A historical/citation correction route now appears in Reference, with an issue template and contribution guidance; see decision 0010.
+- [x] Record release-specific known limitations and the correction route in `docs/release-handoff.md`.
 
 Done when: the first learning journey works end to end from a deployed URL and the library can be consumed independently.
 

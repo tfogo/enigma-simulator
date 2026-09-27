@@ -36,11 +36,11 @@ test("all views reflow at 320 CSS pixels with usable machine keys", async ({ pag
   }
 });
 
-test("skip link transfers keyboard navigation into main content", async ({ page }) => {
+test("skip link transfers keyboard navigation into main content", async ({ page, browserName }) => {
   await page.goto("/");
-  await page.keyboard.press("Tab");
+  await page.keyboard.press(browserName === "webkit" ? "Alt+Tab" : "Tab");
   await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
   await page.keyboard.press("Enter");
-  await page.keyboard.press("Tab");
+  await page.keyboard.press(browserName === "webkit" ? "Alt+Tab" : "Tab");
   expect(await page.evaluate(() => !!document.activeElement?.closest("main"))).toBe(true);
 });

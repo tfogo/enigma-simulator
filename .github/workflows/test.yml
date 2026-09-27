@@ -39,6 +39,6 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run build:web
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run test:web
       - run: npm run test:package

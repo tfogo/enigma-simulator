@@ -17,7 +17,7 @@ For frontend or packaging changes:
 
 ```sh
 npm run build:web
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 npm run test:web
 npm run test:package
 ```

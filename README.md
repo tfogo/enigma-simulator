@@ -1,5 +1,7 @@
 # Enigma Simulator
-An npm module for Enigma Machines. It can simulate a Wehrmacht Enigma I and Kriegsmarine M3 and M4 variants.
+An independently installable Enigma I/M3/M4 simulator and an interactive learning guide with step-by-step lessons, signal diagrams, and sourced history.
+
+Start with the [interactive guide](#interactive-field-guide-local-release-candidate), or use the library below. See [release preparation](docs/release-handoff.md) and [unreleased changes](CHANGELOG.md).
 
 ## Install
 
@@ -188,15 +190,19 @@ These documents are maintained in the repository and excluded from the npm runti
 
 ## Learn More
 
-A good introduction to the Enigma Machine is this [Numberphile video](https://www.youtube.com/watch?v=G2_Q9FoD-oQ). You can find out more about the details of the inner workings of the machine on [Dirk Rijmenants' website](http://users.telenet.be/d.rijmenants/en/enigmatech.htm). One of the more complex quirks of the Enigma Machine's mechanism is the "double step". You can see this in action in [this video](https://www.youtube.com/watch?v=hcVhQeZ5gI4).
+The guide links museums, historical accounts, technical research, and reproducible messages beside the relevant explanations. Start with the [annotated source ledger](docs/sources.md), [citation coverage](docs/citation-audit.md), and [asset acknowledgements](docs/media-and-attribution.md).
 
 ## Contributors 🎉
 
 [mrpjevans](https://github.com/mrpjevans)
 
-## Interactive field guide (prototype)
+## Interactive field guide (local release candidate)
 
 The `web/` frontend includes four guided lessons, an Enigma I/M3/M4 workbench, a signal inspector, and sourced History and Reference views.
+
+![Desktop learning guide with the first keypress and signal trace](docs/images/learn-desktop.png)
+
+[View the mobile layout](docs/images/learn-mobile.png).
 
 ```sh
 npm ci --ignore-scripts
@@ -207,7 +213,7 @@ Open `http://127.0.0.1:5173`. To verify the production frontend:
 
 ```sh
 npm run build:web
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 npm run test:web
 npm run test:package
 ```

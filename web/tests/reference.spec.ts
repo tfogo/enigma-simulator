@@ -42,6 +42,7 @@ test("contextual source navigation preserves the lesson and focuses the evidence
 
 test("glossary searches definitions and follows the matching source without trapping focus", async ({
   page,
+  browserName,
 }) => {
   await page.goto("/");
   await page
@@ -55,7 +56,7 @@ test("glossary searches definitions and follows the matching source without trap
   ]);
   await page.getByRole("button", { name: "Source for Ring setting" }).click();
   await expect(page.locator("#reference-mechanism")).toBeFocused();
-  await page.keyboard.press("Tab");
+  await page.keyboard.press(browserName === "webkit" ? "Alt+Tab" : "Tab");
   await expect(page.locator("#reference-mechanism h2 a")).toBeFocused();
   await page.getByLabel("Find a term").fill("xyzzy");
   await expect(

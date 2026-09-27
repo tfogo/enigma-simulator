@@ -974,7 +974,9 @@ export default function App() {
           </span>
         </div>
         <span>Explore the mechanism. Follow the evidence.</span>
-        <span className="tiny muted">Prototype · 01</span>
+        <a className="tiny muted" href="./THIRD_PARTY_NOTICES.txt">
+          Software credits
+        </a>
       </footer>
     </SourceNavigation.Provider>
   );

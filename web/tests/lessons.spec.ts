@@ -28,7 +28,8 @@ test("repeated letters lesson requires a correct prediction and experiment, with
       name: "The route changes; output letters can repeat.",
     })
     .click();
-  await page.getByRole("button", { name: "Mark lesson complete" }).click();
+  await page.getByRole("button", { name: "Mark lesson complete" }).focus();
+  await page.keyboard.press("Enter");
   await expect(
     page.getByRole("button", { name: "Mark lesson complete" }),
   ).toBeFocused();

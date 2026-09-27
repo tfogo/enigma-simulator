@@ -4,7 +4,7 @@ Last updated: 27 September 2026. This is a verification record, not a conformanc
 
 ## Completed locally
 
-- Automated axe scans of Learn, Explore, History, Reference, expanded trace/import controls, and guided playback at desktop and 390px mobile widths.
+- Automated Chromium desktop/mobile, Firefox desktop, and WebKit narrow-viewport checks, including axe scans of Learn, Explore, History, Reference, expanded trace/import controls, and guided playback at desktop and 390px mobile widths.
 - Browser tests of keyboard input, Enter activation, focus retention at playback completion, and reduced-motion behavior.
 - Live keyboard and native accessibility-tree inspection in the macOS in-app browser: playback controls have names and states; Enter operates pause, next, and result; Tab reaches the result control; completion retains focus and exposes the F lamp and AAB windows.
 - Responsive visual inspection and page-overflow checks. The diagram and trace table have focusable scrolling regions.
@@ -25,3 +25,5 @@ Use VoiceOver with Safari and NVDA with Firefox or Chrome. Record browser/reader
 8. Test at 200% and 400% zoom and on a physical touch device. Verify reachability, readable reflow, and sufficiently usable touch controls.
 
 Log failures with the interaction, expected result, actual speech/focus behavior, and a reproducible configuration before marking the M4 manual-verification checkbox complete.
+
+The expanded 96-case suite passed locally. WebKit uses Option/Alt+Tab to include links; keyboard completion checks activate with Enter. Native clipboard-grant testing runs in Chromium; denied clipboard/storage recovery is covered on all engines. Desktop/mobile screenshots of the release candidate were inspected and are stored in `docs/images/`.

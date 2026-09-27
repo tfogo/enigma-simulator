@@ -195,7 +195,10 @@ test("malformed links recover and expanded tools remain accessible", async ({
 test("copy output and graceful fallbacks when browser storage or clipboard is blocked", async ({
   page,
   context,
+  browserName,
 }) => {
+  // Playwright exposes native clipboard grants only in Chromium.
+  if (browserName === "chromium") {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await explore(page);
   await append(page, "HELLOWORLD");
@@ -205,6 +208,7 @@ test("copy output and graceful fallbacks when browser storage or clipboard is bl
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
     await page.getByTestId("ciphertext").innerText(),
   );
+  }
   await page.addInitScript(() => {
     Object.defineProperty(window, "localStorage", {
       get() {
