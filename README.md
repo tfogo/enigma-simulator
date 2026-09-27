@@ -62,6 +62,24 @@ Named configurations support `EnigmaI`, `M3` (default), and `M4`, with model-spe
 
 `getConfiguration()` returns initial/reset positions and the chosen settings. `getState()` returns current positions. Both use left-to-right arrays and return independent copies. Snapshots contain both, with `schemaVersion: 1`. Import objects with `enigma.fromSnapshot(snapshot)` or JSON with `enigma.deserialize(json)`. `restore(snapshot)` validates before changing anything and can restore a different model. Missing/unknown snapshot fields, unsupported versions, and invalid settings are rejected. Do not mix named and positional factory arguments.
 
+### Explain a keypress
+
+```js
+const machine = enigma();
+const trace = machine.pressKeyWithTrace('A');
+console.log(trace.output);          // 'F'
+console.log(trace.positionsBefore); // [0, 0, 0]
+console.log(trace.positionsAfter);  // [0, 0, 1]
+console.log(trace.stepping);        // Movement and reasons for every rotor.
+console.log(trace.stages);          // Plugboard → ETW → rotors → reflector → return.
+```
+
+`pressKeyWithTrace()` advances once and returns a trace instead of a string. `traceChar()` inspects the current circuit without stepping; its `stepping` array is empty. The existing `pressKey()` and `encodeChar()` still return strings. Every method uses the same electrical path.
+
+Trace schema version 1 contains `model`, `input`, `output`, `stepped`, `positionsBefore`, `positionsAfter`, `stepping`, and `stages`. Slot numbers are zero-based from the left; IDs such as `rotor-0` identify slots, while `name` identifies the installed component. Contacts use A=0 through Z=25. Each stage includes contact numbers and letters. Rotor stages also include the post-step window, ring setting, offset, and contacts relative to the fixed wiring. Direction is `forward`, `reflect`, or `return`.
+
+Stepping records use pre-step notch states. Reason codes are `keypress`, `right-neighbor-at-notch`, `at-notch`, `no-turnover`, and `stationary`; multiple causes can apply to a single movement. A trace is detached JSON-compatible data. Store a snapshot before a keypress for undo/replay; traces describe transitions but are not complete saved machines.
+
 ### enigma()
 
 #### Syntax

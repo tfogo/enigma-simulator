@@ -236,9 +236,9 @@ Depends on M1.
 
 - [x] Add the named configuration API and historical model profiles, including reflector A.
 - [x] Add inspection, cloning, snapshots, restoration, and versioned export/import.
-- [ ] Produce trace data from the actual encoding path.
-- [ ] Add explicit stepping reasons and stable component/slot identifiers.
-- [ ] Test replay, trace consistency, serialization, malformed imports, and M3/M4 equivalence.
+- [x] Produce trace data from the actual encoding path.
+- [x] Add explicit stepping reasons and stable component/slot identifiers.
+- [x] Test replay, trace consistency, serialization, malformed imports, and M3/M4 equivalence.
 - [ ] Write API examples and a compatibility/migration guide; add type definitions or adopt TypeScript after recording the choice.
 
 Done when: one keypress can be explained and replayed exactly without the frontend implementing cryptography.

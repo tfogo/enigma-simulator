@@ -131,13 +131,74 @@ class EnigmaMachine {
   // Inspection at the current state: intentionally does NOT step (legacy API).
   encodeChar(c) {
     character(c);
-    let contact = ALPHABET.indexOf(this.plugboard[ALPHABET.indexOf(c)]);
-    for (const rotor of this.rotors) contact = rotor.forward(contact);
-    contact = ALPHABET.indexOf(this.reflector[contact]);
-    for (let i = this.rotors.length - 1; i >= 0; i--) {
-      contact = this.rotors[i].backward(contact);
+    return this.#transform(c);
+  }
+
+  #transform(c, stages) {
+    let contact = ALPHABET.indexOf(c);
+    const visit = (kind, componentId, name, direction, output, detail = {}) => {
+      if (stages) stages.push({ kind, componentId, name, direction,
+        input: contact, output, inputLetter: ALPHABET[contact], outputLetter: ALPHABET[output], ...detail });
+      contact = output;
+    };
+    const passRotor = (rotor, index, direction) => {
+      const { output, offset, wiringInput, wiringOutput } = rotor.transform(contact, direction);
+      const slot = this.rotors.length - 1 - index;
+      visit('rotor', `rotor-${slot}`, rotor.rotorType, direction, output, {
+        slot, position: rotor.position, ringSetting: rotor.ringSetting, offset, wiringInput, wiringOutput,
+      });
+    };
+    visit('plugboard', 'plugboard', 'Plugboard', 'forward', ALPHABET.indexOf(this.plugboard[contact]));
+    visit('entry-wheel', 'entry-wheel', 'ETW', 'forward', contact);
+    for (let i = 0; i < this.rotors.length; i++) passRotor(this.rotors[i], i, 'forward');
+    visit('reflector', 'reflector', this.reflectorType, 'reflect', ALPHABET.indexOf(this.reflector[contact]));
+    for (let i = this.rotors.length - 1; i >= 0; i--) passRotor(this.rotors[i], i, 'return');
+    visit('entry-wheel', 'entry-wheel', 'ETW', 'return', contact);
+    visit('plugboard', 'plugboard', 'Plugboard', 'return', ALPHABET.indexOf(this.plugboard[contact]));
+    return ALPHABET[contact];
+  }
+
+  #trace(c, stepped) {
+    character(c);
+    const positionsBefore = this.getState().positions;
+    const stepping = stepped ? this.#step() : [];
+    const stages = [];
+    const output = this.#transform(c, stages);
+    return { schemaVersion: 1, model: this.model, input: c, output, stepped,
+      positionsBefore, positionsAfter: this.getState().positions, stepping, stages };
+  }
+
+  traceChar(c) {
+    return this.#trace(c, false);
+  }
+
+  pressKeyWithTrace(c) {
+    return this.#trace(c, true);
+  }
+
+  #step() {
+    const [fast, middle] = this.rotors;
+    const fastAtNotch = fast.atNotch();
+    const middleAtNotch = middle.atNotch();
+    // All decisions refer to the same pre-step state, including simultaneous notches.
+    const decisions = this.rotors.map((rotor, index) => {
+      const slot = this.rotors.length - 1 - index;
+      const reasons = [];
+      if (index === 0) reasons.push('keypress');
+      if (index === 1 && fastAtNotch) reasons.push('right-neighbor-at-notch');
+      if (index === 1 && middleAtNotch) reasons.push('at-notch');
+      if (index === 2 && middleAtNotch) reasons.push('right-neighbor-at-notch');
+      const moved = reasons.length > 0;
+      if (!moved) reasons.push(index === 3 ? 'stationary' : 'no-turnover');
+      return { componentId: `rotor-${slot}`, slot, rotor: rotor.rotorType,
+        role: ['fast', 'middle', 'slow', 'greek'][index],
+        before: rotor.position, after: rotor.position, atNotch: rotor.atNotch(), moved, reasons };
+    });
+    for (let i = 0; i < this.rotors.length; i++) {
+      if (decisions[i].moved) this.rotors[i].cycle();
+      decisions[i].after = this.rotors[i].position;
     }
-    return this.plugboard[contact];
+    return decisions.reverse();
   }
 
   pressKey(c) {
@@ -156,13 +217,7 @@ class EnigmaMachine {
   }
 
   cycleRotors() {
-    const [fast, middle, slow] = this.rotors;
-    // Decide from pre-step windows. Ring offsets do not move these notches.
-    const middleAtNotch = middle.atNotch();
-    const fastAtNotch = fast.atNotch();
-    if (middleAtNotch) slow.cycle();
-    if (middleAtNotch || fastAtNotch) middle.cycle();
-    fast.cycle();
+    this.#step();
   }
 
   setPosition(positions) {

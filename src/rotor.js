@@ -46,11 +46,21 @@ class Rotor {
   }
 
   forward(contact) {
-    return mod26(wirings[this.rotorType].forward[mod26(contact + this.offset)] - this.offset);
+    return this.transform(contact, 'forward').output;
   }
 
   backward(contact) {
-    return mod26(wirings[this.rotorType].reverse[mod26(contact + this.offset)] - this.offset);
+    return this.transform(contact, 'return').output;
+  }
+
+  transform(contact, direction) {
+    setting(contact, 'contact');
+    if (!['forward', 'return'].includes(direction)) throw new TypeError('Unknown signal direction');
+    const offset = this.offset;
+    const wiringInput = mod26(contact + offset);
+    const wiring = direction === 'forward' ? wirings[this.rotorType].forward : wirings[this.rotorType].reverse;
+    const wiringOutput = wiring[wiringInput];
+    return { input: contact, output: mod26(wiringOutput - offset), offset, wiringInput, wiringOutput };
   }
 
   atNotch() {

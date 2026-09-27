@@ -33,9 +33,13 @@ Import requires all fields and rejects unknown fields, unsupported versions, and
 
 `clone()`, `snapshot()`, `restore()`, `serialize()`, `enigma.fromSnapshot()`, and `enigma.deserialize()` use the same schema. Undo should restore a snapshot rather than invert stepping. Direct mutation of legacy internals remains unsupported.
 
-## Trace contract (implemented in the next M2 increment)
+## Trace contract
 
-Keep string-returning methods unchanged. Add separate methods for a traced physical keypress and non-stepping circuit inspection. Both must traverse the same electrical operations as ordinary encoding. Trace output will be versioned, serializable data with stable slot identifiers, normalized contacts, visible letters, wiring-relative offsets, positions before/after, and explicit mechanical reasons. SVG geometry and animation timing are not engine concerns.
+String-returning methods remain unchanged. `pressKeyWithTrace()` performs one physical keypress; `traceChar()` inspects without stepping. Both traverse the same electrical operations as ordinary encoding. Trace output is versioned, serializable data with stable slot identifiers, normalized contacts, visible letters, wiring-relative offsets, positions before/after, and explicit mechanical reasons. SVG geometry and animation timing are not engine concerns.
+
+The `stepping` array is left-to-right, and describes each rotor's pre-step notch state, movement, and all applicable reasons. Electrical `stages` are in traversal order, including the identity entry wheel on both passes. Every rotor stage includes a `slot`, `position`, `ringSetting`, `offset`, `wiringInput`, and `wiringOutput`, so a renderer does not need to reconstruct cipher operations. Directions are `forward`, `reflect`, and `return`. Trace schema version 1 is independent of snapshot schema version 1.
+
+The reflector A addition is verified against the indicator and body of the 1930 manual example transcribed by Frode Weierud. The archival original has not been inspected; source records make that distinction explicit.
 
 ## Types and compatibility
 

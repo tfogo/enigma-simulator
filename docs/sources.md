@@ -5,6 +5,7 @@ The machine and test fixtures use these checked references. Structured records a
 | Source | Evidence used | What to read next |
 | --- | --- | --- |
 | [Crypto Museum: wiring catalogue](https://www.cryptomuseum.com/crypto/enigma/wiring.htm) | Model component sets and reflector A | Military and commercial wiring tables, with notation conventions |
+| [Frode Weierud: 1930 test message](https://cryptocellar.org/enigma/e-message-1930.html) | Reflector A, recovered indicator and message body | Transcription of an instruction-manual example; the archival original has not been inspected |
 | [Crypto Museum: Enigma explained](https://www.cryptomuseum.com/crypto/enigma/working.htm) | Pre-signal stepping, index-ring notches, consecutive double-step sequence, plugboard capacity | Illustrated beginner explanation of the electrical and mechanical paths; see the period discrepancy below |
 | [Py-Enigma user's guide](https://py-enigma.readthedocs.io/en/latest/guide.html#example-communication-procedure) | Published three-rotor message-key and body examples with nonzero rings and plugs | A software-oriented send/receive walkthrough; the teaching message is not an authentic intercept |
 | [M4 Project: first break](https://www.bytereef.org/m4-project-first-break.html) | Original published ciphertext and raw recovered text with full M4 settings | Research result, interpretation, and a pointer to the historical diary; we have not inspected that diary ourselves |

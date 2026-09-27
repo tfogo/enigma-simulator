@@ -98,5 +98,23 @@
       "Reflector A wiring is EJMZALYXVBWFCRQUONTSPIKHGD"
     ],
     "notes": "Profiles express component families across their history, not a dated key sheet or proof that every permitted combination was operationally used."
+  },
+  {
+    "id": "crypto-cellar-1930",
+    "title": "The Enigma Test Message from 1930",
+    "author": "Frode Weierud",
+    "url": "https://cryptocellar.org/enigma/e-message-1930.html",
+    "accessed": "2026-09-27",
+    "type": "specialist transcription of a historical manual example",
+    "locators": [
+      "Key settings",
+      "Ciphertext only",
+      "Decrypts"
+    ],
+    "claims": [
+      "The manual example encodes ABLABL to PKPJXI at FOL using reflector A",
+      "The message body at ABL reproduces the published 84-letter ciphertext"
+    ],
+    "notes": "Source points to British National Archives HW25/9. We checked the web transcription, not the archival document. Fixture preserves raw spelling and excludes the indicator from the body."
   }
 ]

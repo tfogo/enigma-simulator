@@ -77,5 +77,57 @@
     "plugboard": "AT BL DF GJ HM NW OP QY RZ VX",
     "plaintext": "VONVONJLOOKSJHFFTTTEINSEINSDREIZWOYYQNNSNEUNINHALTXXBEIANGRIFFUNTERWASSERGEDRUECKTYWABOSXLETZTERGEGNERSTANDNULACHTDREINULUHRMARQUANTONJOTANEUNACHTSEYHSDREIYZWOZWONULGRADYACHTSMYSTOSSENACHXEKNSVIERMBFAELLTYNNNNNNOOOVIERYSICHTEINSNULL",
     "ciphertext": "NCZWVUSXPNYMINHZXMQXSFWXWLKJAHSHNMCOCCAKUQPMKCSMHKSEINJUSBLKIOSXCKUBHMLLXCSJUSRRDVKOHULXWCCBGVLIYXEOAHXRHKKFVDREWEZLXOBAFGYUJQUKGRTVUKAMEURBVEKSUHHVOYHABCJWMAKLFKLMYFVNRIZRVVRTKOFDANJMOLBGFFLEOPRGTFLVRHOWOPBEKVWMUQFMPWPARMFHAGKXIIBG"
+  },
+  {
+    "source": "crypto-cellar-1930",
+    "kind": "historical instruction-manual test message transcribed by Frode Weierud",
+    "rotors": [
+      "II",
+      "I",
+      "III"
+    ],
+    "ringSettings": [
+      23,
+      12,
+      21
+    ],
+    "reflector": "A",
+    "plugboard": "AM FI NV PS TU WZ",
+    "id": "enigma-i-1930-indicator",
+    "locator": "Key settings and twice-enciphered start position",
+    "positions": [
+      5,
+      14,
+      11
+    ],
+    "plaintext": "ABLABL",
+    "ciphertext": "PKPJXI",
+    "notes": "Historical numeric settings 06 15 12 and 24 13 22 converted from 1-based to 0-based values."
+  },
+  {
+    "source": "crypto-cellar-1930",
+    "kind": "historical instruction-manual test message transcribed by Frode Weierud",
+    "rotors": [
+      "II",
+      "I",
+      "III"
+    ],
+    "ringSettings": [
+      23,
+      12,
+      21
+    ],
+    "reflector": "A",
+    "plugboard": "AM FI NV PS TU WZ",
+    "id": "enigma-i-1930-body",
+    "locator": "Ciphertext only / Decrypts",
+    "positions": [
+      0,
+      1,
+      11
+    ],
+    "plaintext": "FEINDLIQEINFANTERIEKOLONNEBEOBAQTETXANFANGSUEDAUSGANGBAERWALDEXENDEDREIKMOSTWAERTSNEUSTADT",
+    "ciphertext": "GCDSEAHUGWTQGRKVLFGXUCALXVYMIGMMNMFDXTGNVHVRMMEVOUYFZSLRHDRRXFJWCFHUHMUNZEFRDISIKBGPMYVXUZ",
+    "notes": "Body starts at recovered message key ABL; excludes the six-letter indicator. Removed grouping spaces, retained historical spelling. The archive original was not independently inspected."
   }
 ]
