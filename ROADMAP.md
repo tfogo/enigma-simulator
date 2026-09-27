@@ -280,14 +280,16 @@ Integration uses the implemented M4 workflows. Manual M4 accessibility verificat
 - [x] Implement lessons 1–4 with automated checks and optional deeper reading (available in the local preview; public publication remains M6).
 - [ ] Publish a concise, sourced history route covering origins, the Polish contribution, wartime operation, and the Allied codebreaking workflow.
 - [ ] Add the glossary and first artifact/source pages.
-- [ ] Implement the shared source registry, contextual citation notes, and searchable reference library.
-- [ ] Add annotated further reading to every published history chapter and relevant lesson.
+- [x] Implement the shared source registry, contextual citation notes, and searchable reference library.
+- [x] Add annotated further reading to every implemented history chapter and relevant lesson.
 - [ ] Verify claim-level citations, precise locators, source-access labels, and accessible navigation between content and references.
-- [ ] Include one fully sourced historical example that runs in the simulator.
+- [x] Include one fully sourced historical example that runs in the simulator (1930 manual indicator and body, with transcription access clearly labelled).
 - [ ] Review all machine claims against fixtures and all historical claims against the ledger.
 - [ ] Trial with a small group of beginners; observe confusion rather than relying only on satisfaction ratings.
 
 Done when: beginners can explain why state changes, why reset is needed, and how the machine fits into a wider human communications system.
+
+The shared source registry and 1930 example are recorded in [the history decision](docs/decisions/0007-history-and-document-example.md). The initial route now has six sourced sections; a fuller historical narrative and finer-grained citation audit remain open.
 
 ### M6 — First public release (medium)
 

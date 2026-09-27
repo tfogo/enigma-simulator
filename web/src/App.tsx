@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
 import Machine from "./Machine";
+import { historicalExamples } from "./historicalExamples";
 import enigma from "enigma-simulator";
 import LessonActivity from "./LessonActivity";
 import {
@@ -60,8 +61,10 @@ export function SourceNote({ id }: { id: string }) {
       </a>
       <p>{source.note}</p>
       <p className="tiny muted">
-        Look for: {source.locator}. Opens in a new tab.
+        Look for: {source.locator}. Opens in a new tab. Checked{" "}
+        {source.accessed}.
       </p>
+      <p className="tiny muted">Evidence note: {source.evidence}</p>
     </details>
   );
 }
@@ -70,6 +73,7 @@ export default function App() {
   const [view, setView] = useState<View>(
     shared.snapshot || shared.error ? "Explore" : "Learn",
   );
+  const [activeExample, setActiveExample] = useState<string | null>(null);
   const [shareError, setShareError] = useState(shared.error);
   const [settingsRevision, setSettingsRevision] = useState(0);
   const [learn, dispatchLearn] = useReducer(sessionReducer, undefined, () =>
@@ -139,6 +143,7 @@ export default function App() {
       setView("Explore");
       setShareError(incoming.error);
       if (incoming.snapshot) {
+        setActiveExample(null);
         dispatchExplore({ type: "configure", snapshot: incoming.snapshot });
         setSelectedEntry(null);
         setSettingsRevision((value) => value + 1);
@@ -152,9 +157,24 @@ export default function App() {
     setView(next);
     requestAnimationFrame(() => document.getElementById("page-title")?.focus());
   }
+  function loadHistoricalExample(id: string) {
+    const example = historicalExamples.find((item) => item.id === id)!;
+    updateExplore({ type: "configure", snapshot: example.snapshot });
+    setDraftMessage(example.ciphertext);
+    setActiveExample(id);
+    navigate("Explore");
+  }
+  const example = historicalExamples.find((item) => item.id === activeExample);
+  const exampleMatches =
+    example &&
+    explore.entries.map((entry) => entry.trace.input).join("") ===
+      example.ciphertext &&
+    explore.entries.map((entry) => entry.trace.output).join("") ===
+      example.plaintext;
   function updateExplore(action: Action, refreshSettings = true) {
     setSelectedEntry(null);
     if (action.type === "configure") {
+      setActiveExample(null);
       setShareError(undefined);
       if (refreshSettings) setSettingsRevision((value) => value + 1);
     }
@@ -556,6 +576,52 @@ export default function App() {
               </div>
             </aside>
             <div className="machine-column">
+              {view === "Explore" && example && (
+                <section
+                  className="historical-example"
+                  aria-label="Historical example"
+                >
+                  <p className="eyebrow">A DOCUMENTED EXPERIMENT</p>
+                  <h2>{example.title}</h2>
+                  <p>
+                    The settings are loaded and ciphertext is in the message
+                    draft. Review it and press Append previewed letters to
+                    decipher it.
+                  </p>
+                  <p className="tiny">
+                    Rotor order II–I–III · rings XMV (24–13–22) · reflector A ·
+                    plugs AM FI NV PS TU WZ · start{" "}
+                    {letters(example.snapshot.state.positions)}.
+                  </p>
+                  <p className="tiny muted">{example.notes}</p>
+                  {exampleMatches && (
+                    <p role="status" className="success">
+                      Verified: the result matches the published transcription.
+                    </p>
+                  )}
+                  <details>
+                    <summary>Expected result and source context</summary>
+                    <p className="historical-text">{example.plaintext}</p>
+                    <p className="tiny">
+                      {example.id.endsWith("indicator")
+                        ? "ABLABL repeats the message key ABL. Load the body to begin at ABL."
+                        : "This is the uncorrected letter stream. Historical spelling and separators are preserved; read the source for interpretation."}
+                    </p>
+                    <SourceNote id="1930" />
+                  </details>
+                  <div className="message-utilities">
+                    {historicalExamples.map((item) => (
+                      <button
+                        className="secondary"
+                        key={item.id}
+                        onClick={() => loadHistoricalExample(item.id)}
+                      >
+                        Load {item.title}
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              )}
               <div className="playback-options">
                 <label>
                   Keypress display{" "}
@@ -624,12 +690,13 @@ export default function App() {
                 <br />a box of rotors.
               </h2>
               <p>
-                Start with these four windows into the story. Open the source
-                notes to check the evidence and continue reading.
+                Follow the machine from commercial use to operator procedure and
+                wartime codebreaking. Open the source notes to check the
+                evidence and continue reading.
               </p>
               <p className="muted tiny">
-                These are introductory selections. The fuller wartime narrative
-                is still being developed.
+                This is a concise introductory route. Source notes identify what
+                was checked and where to read further.
               </p>
               <div className="decorative-rotors" aria-hidden="true">
                 <Mark />
@@ -650,6 +717,19 @@ export default function App() {
                   <details className="history-detail">
                     <summary>{chapter.question}</summary>
                     <p>{chapter.detail}</p>
+                    {chapter.source === "1930" && (
+                      <div className="message-utilities">
+                        {historicalExamples.map((item) => (
+                          <button
+                            className="secondary"
+                            key={item.id}
+                            onClick={() => loadHistoricalExample(item.id)}
+                          >
+                            Load {item.title}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                     {chapter.source === "naval" && (
                       <button
                         className="secondary"
@@ -710,6 +790,13 @@ export default function App() {
                   <p className="source-author">{source.author}</p>
                   <p>{source.note}</p>
                   <p className="tiny muted">Look for: {source.locator}</p>
+                  <details className="source-note">
+                    <summary>Evidence & access</summary>
+                    <p className="tiny">
+                      Checked {source.accessed}. {source.evidence}
+                    </p>
+                    <p className="tiny">Source record: {source.sourceId}</p>
+                  </details>
                 </article>
               ))}
             </div>

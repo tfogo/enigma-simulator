@@ -1668,3 +1668,26 @@ button[aria-disabled="true"]:hover {
 .experiment-observation .secondary {
   margin-top: 10px;
 }
+.historical-example {
+  padding: 22px;
+  margin-bottom: 18px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper);
+}
+.historical-example h2 {
+  font-size: 30px;
+  margin: 8px 0 16px;
+}
+.historical-example p {
+  margin: 10px 0;
+}
+.historical-example summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+.historical-text {
+  overflow-wrap: anywhere;
+  font-family: var(--mono);
+}

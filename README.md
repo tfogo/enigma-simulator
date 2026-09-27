@@ -195,7 +195,7 @@ A good introduction to the Enigma Machine is this [Numberphile video](https://ww
 
 ## Interactive field guide (prototype)
 
-The `web/` frontend includes a first guided lesson, an Enigma I/M3/M4 workbench, a signal inspector, and sourced History and Reference views.
+The `web/` frontend includes four guided lessons, an Enigma I/M3/M4 workbench, a signal inspector, and sourced History and Reference views.
 
 ```sh
 npm ci --ignore-scripts
@@ -220,3 +220,6 @@ Choose **Follow the keypress** to see the rotors move before the signal reaches 
 
 
 The Learn lesson selector now offers four experiments: first keypress, repeated letters, one complete signal, and deciphering from restored settings. Each lesson includes feedback and a source note. Completed lessons are remembered on this browser and can be cleared; restarting restores the lesson configuration without changing Explore. See [the lesson decisions](docs/decisions/0006-first-four-lessons.md).
+
+
+In History, open **Reproduce the documented example** to load the 1930 manual's indicator or body into Explore. Submit its prepared ciphertext to reproduce the published transcription. Source notes and Reference's **Evidence & access** disclosures share the repository's source ledger and distinguish checked transcriptions from archival originals. See [the historical example decisions](docs/decisions/0007-history-and-document-example.md).

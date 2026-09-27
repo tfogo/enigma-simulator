@@ -113,7 +113,8 @@
     ],
     "claims": [
       "The manual example encodes ABLABL to PKPJXI at FOL using reflector A",
-      "The message body at ABL reproduces the published 84-letter ciphertext"
+      "The message body at ABL reproduces the published 84-letter ciphertext",
+      "The six-letter indicator yields the repeated message key ABL; the body begins at ABL"
     ],
     "notes": "Source points to British National Archives HW25/9. We checked the web transcription, not the archival document. Fixture preserves raw spelling and excludes the indicator from the body."
   },
@@ -157,12 +158,16 @@
     "accessed": "2026-09-27",
     "type": "museum explanation",
     "locators": [
-      "The Bombe",
+      "The Bombe, paragraphs on Y stations, cribs, the diagonal board and BTM",
       "Reconstructing the Bombe"
     ],
     "claims": [
       "The Bombe helped search for Enigma key settings",
-      "The museum displays a working reconstruction"
+      "The museum displays a working reconstruction",
+      "Y stations intercepted Enigma communications",
+      "Cribs supplied suspected plaintext for testing key constraints",
+      "Welchman contributed the diagonal board; BTM engineered and built Bombes",
+      "Some keys were never broken"
     ],
     "notes": "Used only for the listed claims; do not adopt the page’s loose prewar chronology as authority for dates of Polish breakthroughs."
   }
