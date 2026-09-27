@@ -1,4 +1,10 @@
-import { useEffect, useReducer, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from "react";
 import Machine from "./Machine";
 import { historicalExamples } from "./historicalExamples";
 import enigma from "enigma-simulator";
@@ -27,6 +33,10 @@ import {
   type Action,
 } from "./session";
 import { history, readings } from "./content";
+import { glossary } from "./glossary";
+const SourceNavigation = createContext<((id: string) => void) | undefined>(
+  undefined,
+);
 
 type View = "Learn" | "Explore" | "History" | "Reference";
 function Mark() {
@@ -49,6 +59,7 @@ function Mark() {
   );
 }
 export function SourceNote({ id }: { id: string }) {
+  const openReference = useContext(SourceNavigation);
   const source = readings.find((r) => r.id === id)!;
   return (
     <details className="source-note">
@@ -65,6 +76,14 @@ export function SourceNote({ id }: { id: string }) {
         {source.accessed}.
       </p>
       <p className="tiny muted">Evidence note: {source.evidence}</p>
+      {source.accessNote && (
+        <p className="tiny muted">Access update: {source.accessNote}</p>
+      )}
+      {openReference && (
+        <button className="text-button" onClick={() => openReference(id)}>
+          View source record →
+        </button>
+      )}
     </details>
   );
 }
@@ -73,6 +92,21 @@ export default function App() {
   const [view, setView] = useState<View>(
     shared.snapshot || shared.error ? "Explore" : "Learn",
   );
+  const [referenceOrigin, setReferenceOrigin] = useState<View | null>(null);
+  const [selectedSource, setSelectedSource] = useState<string | null>(null);
+  const [glossaryQuery, setGlossaryQuery] = useState("");
+  function openReference(id: string) {
+    if (view !== "Reference") setReferenceOrigin(view);
+    setQuery("");
+    setTopic("All topics");
+    setSelectedSource(id);
+    setView("Reference");
+    requestAnimationFrame(() => {
+      const card = document.getElementById(`reference-${id}`);
+      card?.focus();
+      card?.scrollIntoView({ block: "center" });
+    });
+  }
   const [activeExample, setActiveExample] = useState<string | null>(null);
   const [shareError, setShareError] = useState(shared.error);
   const [settingsRevision, setSettingsRevision] = useState(0);
@@ -154,6 +188,8 @@ export default function App() {
   }, []);
 
   function navigate(next: View) {
+    setReferenceOrigin(null);
+    setSelectedSource(null);
     setView(next);
     requestAnimationFrame(() => document.getElementById("page-title")?.focus());
   }
@@ -233,7 +269,7 @@ export default function App() {
         .includes(query.toLowerCase()),
   );
   return (
-    <>
+    <SourceNavigation.Provider value={openReference}>
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -747,6 +783,57 @@ export default function App() {
         )}
         {view === "Reference" && (
           <section aria-label="Reference library">
+            {referenceOrigin && (
+              <button
+                className="secondary reference-back"
+                onClick={() => {
+                  navigate(referenceOrigin);
+                  setReferenceOrigin(null);
+                  setSelectedSource(null);
+                }}
+              >
+                Back to {referenceOrigin} →
+              </button>
+            )}
+            <section className="glossary" aria-labelledby="glossary-title">
+              <h2 id="glossary-title">A few useful words.</h2>
+              <label>
+                Find a term
+                <input
+                  type="search"
+                  value={glossaryQuery}
+                  onChange={(event) => setGlossaryQuery(event.target.value)}
+                  placeholder="Try rotor, ring, or crib…"
+                />
+              </label>
+              <dl>
+                {glossary
+                  .filter((item) =>
+                    `${item.term} ${item.definition}`
+                      .toLowerCase()
+                      .includes(glossaryQuery.toLowerCase()),
+                  )
+                  .map((item) => (
+                    <div key={item.term}>
+                      <dt>{item.term}</dt>
+                      <dd>
+                        {item.definition}{" "}
+                        <button
+                          className="text-button"
+                          onClick={() => openReference(item.source)}
+                        >
+                          Source for {item.term} →
+                        </button>
+                      </dd>
+                    </div>
+                  ))}
+              </dl>
+              {!glossary.some((item) =>
+                `${item.term} ${item.definition}`
+                  .toLowerCase()
+                  .includes(glossaryQuery.toLowerCase()),
+              ) && <p>No matching terms. Try another word.</p>}
+            </section>
             <div className="reference-tools">
               <label>
                 Find a resource
@@ -776,7 +863,12 @@ export default function App() {
             </div>
             <div className="reference-grid">
               {filtered.map((source) => (
-                <article className="reference-card" key={source.id}>
+                <article
+                  className={`reference-card ${selectedSource === source.id ? "selected-source" : ""}`}
+                  id={`reference-${source.id}`}
+                  tabIndex={-1}
+                  key={source.id}
+                >
                   <div className="resource-meta">
                     <span className="tag">{source.topic}</span>
                     <span className="tiny muted">{source.level}</span>
@@ -790,12 +882,24 @@ export default function App() {
                   <p className="source-author">{source.author}</p>
                   <p>{source.note}</p>
                   <p className="tiny muted">Look for: {source.locator}</p>
-                  <details className="source-note">
+                  <details
+                    className="source-note"
+                    open={selectedSource === source.id || undefined}
+                  >
                     <summary>Evidence & access</summary>
                     <p className="tiny">
                       Checked {source.accessed}. {source.evidence}
                     </p>
+                    {source.accessNote && (
+                      <p className="tiny">Access update: {source.accessNote}</p>
+                    )}
                     <p className="tiny">Source record: {source.sourceId}</p>
+                    <h3>Claims checked for this guide</h3>
+                    <ul>
+                      {source.claims.map((claim) => (
+                        <li key={claim}>{claim}</li>
+                      ))}
+                    </ul>
                   </details>
                 </article>
               ))}
@@ -836,6 +940,6 @@ export default function App() {
         <span>Explore the mechanism. Follow the evidence.</span>
         <span className="tiny muted">Prototype · 01</span>
       </footer>
-    </>
+    </SourceNavigation.Provider>
   );
 }

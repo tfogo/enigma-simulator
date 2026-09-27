@@ -223,3 +223,6 @@ The Learn lesson selector now offers four experiments: first keypress, repeated 
 
 
 In History, open **Reproduce the documented example** to load the 1930 manual's indicator or body into Explore. Submit its prepared ciphertext to reproduce the published transcription. Source notes and Reference's **Evidence & access** disclosures share the repository's source ledger and distinguish checked transcriptions from archival originals. See [the historical example decisions](docs/decisions/0007-history-and-document-example.md).
+
+
+Reference also includes a searchable glossary. Use **View source record** in a citation note to inspect the evidence and checked claims, then return to the lesson or experiment without losing its state. Source records disclose access limitations. The [citation coverage record](docs/citation-audit.md) distinguishes automated consistency checks from the remaining historical review.

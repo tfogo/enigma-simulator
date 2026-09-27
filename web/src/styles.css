@@ -1691,3 +1691,70 @@ button[aria-disabled="true"]:hover {
   overflow-wrap: anywhere;
   font-family: var(--mono);
 }
+.glossary {
+  padding: 24px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  margin-bottom: 28px;
+}
+.glossary h2 {
+  font-size: 32px;
+  margin-bottom: 18px;
+}
+.glossary label {
+  font-size: 12px;
+  font-weight: 600;
+}
+.glossary input {
+  display: block;
+  width: 100%;
+  max-width: 450px;
+  padding: 10px;
+  margin: 8px 0 20px;
+  border: 1px solid #a4ac99;
+  border-radius: 4px;
+  background: #fffef9;
+  color: var(--ink);
+}
+.glossary dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 30px;
+}
+.glossary dt {
+  font-weight: 600;
+  font-size: 14px;
+}
+.glossary dd {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.glossary dd button {
+  display: block;
+  margin-top: 6px;
+}
+.reference-back {
+  margin-bottom: 20px;
+}
+.reference-card:focus {
+  outline: 3px solid #ba741c;
+  outline-offset: 4px;
+}
+.selected-source {
+  border-color: var(--green);
+}
+.reference-card .source-note ul {
+  padding-left: 18px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+@media (max-width: 600px) {
+  .glossary dl {
+    grid-template-columns: 1fr;
+  }
+  .glossary {
+    padding: 20px;
+  }
+}

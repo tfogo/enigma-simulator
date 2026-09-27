@@ -98,6 +98,7 @@ export const readings = [
     ...reading,
     url: evidence.url,
     accessed: evidence.accessed,
+    accessNote: evidence.latestAccessOutcome ?? "",
     evidence:
       evidence.notes ?? "The listed claims were checked against this source.",
     claims: evidence.claims,

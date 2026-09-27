@@ -17,7 +17,9 @@
       "III-II-I windows progress ADO, ADP, ADQ, AER, BFS, BFT, BFU",
       "The plugboard physically supports up to thirteen disjoint pairs"
     ],
-    "notes": "The page gives a period of 16926. We do not adopt that claim: the specialist Enigma Variations paper gives 16900, agreeing with complete cycle enumeration. Retain the page for the individually checked stepping sequence and other listed claims."
+    "notes": "The page gives a period of 16926. We do not adopt that claim: the specialist Enigma Variations paper gives 16900, agreeing with complete cycle enumeration. Retain the page for the individually checked stepping sequence and other listed claims.",
+    "latestAccessAttempt": "2026-09-27",
+    "latestAccessOutcome": "The latest retry returned a verification page. Earlier checked material and its recorded limitations are retained; this was not a fresh content verification."
   },
   {
     "id": "py-enigma-guide",
