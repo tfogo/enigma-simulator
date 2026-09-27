@@ -1,6 +1,6 @@
 # 0002: Public configuration, snapshots, and traces
 
-Status: M2 implementation in progress, 27 September 2026.
+Status: implemented and locally verified, 27 September 2026. No release published.
 
 ## Configuration and model families
 
@@ -44,3 +44,9 @@ The reflector A addition is verified against the indicator and body of the 1930 
 ## Types and compatibility
 
 Retain the JavaScript/CommonJS runtime and ship handwritten TypeScript declarations tested with a strict TypeScript consumer. This provides frontend/editor contracts without introducing a build requirement for runtime consumers. Snapshot and trace schema versions are independent of the unreleased npm version.
+
+## Verification and next boundary
+
+All 110 runtime tests and declaration tests pass locally on Node 22.12, 24, and 26. The packed package has been installed in a separate directory, exercised across all model profiles, and consumed by a strict TypeScript program. CI includes both checks, but has not run remotely.
+
+M3 can now prototype the teaching interface using real transitions. UI input queues, SVG layout, lesson progress, and history navigation remain separate work; this increment does not include a frontend.

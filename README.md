@@ -108,7 +108,7 @@ Returns an instance of `EnigmaMachine`.
 | `'Beta'` | LEYJVCNIXWPBQMDRTAKZGFUHOS |  | Kriegsmarine M4, fourth rotor, didn't rotate, used with thin reflectors |
 | `'Gamma'` | FSOKANUERHMBTIYCWLQPZXVGJD |  | Kriegsmarine M4, fourth rotor, didn't rotate, used with thin reflectors |
 
-The array requires three distinct moving rotors from I–VIII, or a leftmost Beta/Gamma followed by three distinct moving rotors. The Greek rotor does not advance on keypresses. Three-rotor machines require B/C; four-rotor machines require BThin/CThin. Enigma I used I–V; M3 and M4 also had VI–VIII. These are structural constraints, not date-specific historical profiles. See [Crypto Museum's wiring catalogue](https://www.cryptomuseum.com/crypto/enigma/wiring.htm) for historical component sets.
+The array requires three distinct moving rotors from I–VIII, or a leftmost Beta/Gamma followed by three distinct moving rotors. The Greek rotor does not advance on keypresses. Three-rotor machines require A/B/C (A requires I–V); four-rotor machines require BThin/CThin. Enigma I used I–V; M3 and M4 also had VI–VIII. These are structural constraints, not date-specific historical profiles. See [Crypto Museum's wiring catalogue](https://www.cryptomuseum.com/crypto/enigma/wiring.htm) for historical component sets.
 
 Defaults to `['III', 'II', 'I']`. Input arrays are copied, never reversed or modified in place.
 
@@ -168,14 +168,19 @@ machine.pressKey('A');   // 'F': step first, then encode one letter.
 ```sh
 npm ci --ignore-scripts
 npm test
+npm run test:types
 ```
 
 Tests cover legacy outputs, invalid-input atomicity, setters, double stepping, both naval notches, complete single-notch stepping period, wiring invariants, and independently published ciphertexts. CI is configured for Node 22, 24, and 26 on Linux plus Node 24 on Windows.
+
+TypeScript declarations ship with the CommonJS runtime. Use `import enigma = require('enigma-simulator')`, or a default import with `esModuleInterop`. Types include configuration, snapshots, profiles, and discriminated signal stages. Numeric ranges and model-specific component compatibility are still checked at runtime. The engine has no runtime dependencies.
 
 Repository documentation:
 
 - [Roadmap](ROADMAP.md)
 - [Foundation decisions and compatibility changes](docs/decisions/0001-engine-foundation.md)
+- [Configuration and trace contracts](docs/decisions/0002-configuration-and-traces.md)
+- [Migration guide](docs/migration.md)
 - [Sources and fixture provenance](docs/sources.md)
 
 These documents are maintained in the repository and excluded from the npm runtime package. This increment fixes non-default M4 output, rejects formerly accepted invalid setups, and raises the supported Node baseline. It is intended for a future major release; no new version has been published.

@@ -1,6 +1,6 @@
 # Enigma Simulator: implementation and learning roadmap
 
-Status: implementation underway, 27 September 2026. M0–M1 are implemented and locally verified; M2 is next. CI configuration is added but has not run remotely. No release has been published.
+Status: implementation underway, 27 September 2026. M0–M2 are implemented and locally verified; M3 (UX prototype and visual system) is next. CI configuration is added but has not run remotely. No release has been published.
 
 ## 1. Product direction
 
@@ -239,9 +239,11 @@ Depends on M1.
 - [x] Produce trace data from the actual encoding path.
 - [x] Add explicit stepping reasons and stable component/slot identifiers.
 - [x] Test replay, trace consistency, serialization, malformed imports, and M3/M4 equivalence.
-- [ ] Write API examples and a compatibility/migration guide; add type definitions or adopt TypeScript after recording the choice.
+- [x] Write API examples and a compatibility/migration guide; add type definitions or adopt TypeScript after recording the choice.
 
 Done when: one keypress can be explained and replayed exactly without the frontend implementing cryptography.
+
+Verified locally: 110 runtime tests plus strict TypeScript consumer checks on Node 22.12, 24, and 26. The packed npm artifact installs independently, replays all three profiles, and exposes usable declarations to an external consumer. CI has not run remotely. See [the M2 API decision](docs/decisions/0002-configuration-and-traces.md) and [migration guide](docs/migration.md).
 
 ### M3 — UX prototype and visual system (medium; can overlap M1–M2)
 
@@ -365,7 +367,7 @@ Resolve decisions when their milestone needs them:
 | Hosting/domain/publication | Select after a working production preview exists | M6 |
 | Historical extensions | K/Swiss-K first, then UKW-D/Uhr/G | M8 |
 
-M0–M1 implementation is recorded in [the foundation decision](docs/decisions/0001-engine-foundation.md). The next implementation task is M2: configuration/state APIs, historical profiles, and signal traces. Interface sketches and source research can progress alongside that milestone. Revisit this document after each milestone and turn its remaining checkboxes into implementation tasks as needed.
+M0–M1 implementation is recorded in [the foundation decision](docs/decisions/0001-engine-foundation.md), and M2 in [the configuration and trace decision](docs/decisions/0002-configuration-and-traces.md). The next implementation task is M3: a reviewable desktop/mobile UX prototype, a complete keypress interaction, and one short lesson. Historical content research can progress alongside that milestone. Revisit this document after each milestone and turn its remaining checkboxes into implementation tasks as needed.
 
 ## 11. Starting bibliography
 

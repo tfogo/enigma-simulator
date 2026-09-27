@@ -1,4 +1,4 @@
-# Foundation source ledger
+# Engine source ledger
 
 The machine and test fixtures use these checked references. Structured records are in [sources.json](sources.json); ciphertext fixtures, full settings, source IDs, and transcription notes are in [reference-vectors.json](../test/fixtures/reference-vectors.json).
 
@@ -18,4 +18,4 @@ Crypto Museum's working-principle page gives 16,926. The specialist paper *Enigm
 
 Accessed 27 September 2026. Fixture normalization uppercases letters, removes line breaks, converts letter settings to zero-based indices, and spaces plugboard pairs. It does not correct recovered spelling or infer missing letters. The test suite checks the cited data in both directions.
 
-This is the initial evidence ledger for M0–M1, not the complete visitor-facing bibliography planned in M5. Keep exact locators and any limitations when adding new references. Wiring tables, date-specific model histories, and new lesson claims need their own records as those features are implemented.
+This is the initial evidence ledger for M0–M2, not the complete visitor-facing bibliography planned in M5. Keep exact locators and any limitations when adding new references. Date-specific model histories and new lesson claims need their own records as those features are implemented.
