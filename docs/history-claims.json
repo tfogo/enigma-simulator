@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "claims": [
+    {
+      "id": "k-release",
+      "sourceId": "crypto-museum-k",
+      "statement": "Enigma K was released in 1927.",
+      "locator": "Introduction, paragraph beginning “The machine was developed and released”",
+      "basis": "Source account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "k-rotors",
+      "sourceId": "crypto-museum-k",
+      "statement": "K has three cipher rotors and a manually settable reflector.",
+      "locator": "Rotors, first paragraph",
+      "basis": "Source account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "enigma-family",
+      "sourceId": "crypto-museum-k",
+      "statement": "The Enigma family includes different commercial and military applications and variants.",
+      "locator": "Introduction and variant descriptions",
+      "basis": "Synthesis of model descriptions",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "manual-settings",
+      "sourceId": "crypto-cellar-1930",
+      "statement": "The example specifies rotor order, rings, starting windows and plugs.",
+      "locator": "Key settings",
+      "basis": "Source account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "manual-indicator",
+      "sourceId": "crypto-cellar-1930",
+      "statement": "The six-letter indicator recovers ABL, the starting position for the body.",
+      "locator": "Paragraph after Enciphered message; Ciphertext only",
+      "basis": "Source account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "manual-provenance",
+      "sourceId": "crypto-cellar-1930",
+      "statement": "The web transcription identifies a manual translation at National Archives HW25/9.",
+      "locator": "Opening three paragraphs",
+      "basis": "Transcription provenance; archive not inspected",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "pyry-exchange",
+      "sourceId": "gchq-pyry",
+      "statement": "Polish, French and British cryptanalysts exchanged knowledge near Warsaw in July 1939.",
+      "locator": "Opening dated sentence and following account",
+      "basis": "Source account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "pyry-impact",
+      "sourceId": "gchq-pyry",
+      "statement": "GCHQ credits the Polish exchange and later Rejewski–Turing discussions as important to British work.",
+      "locator": "Final paragraph beginning “The knowledge gained in Poland”",
+      "basis": "Institutional retrospective interpretation",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "y-interception",
+      "sourceId": "tnmoc-bombe",
+      "statement": "Y stations intercepted communications including Enigma traffic.",
+      "locator": "The Bombe, paragraph beginning “With the outbreak of war”",
+      "basis": "Source account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "crib-search",
+      "sourceId": "tnmoc-bombe",
+      "statement": "Cribs supplied suspected plaintext for a mechanised key search.",
+      "locator": "The Bombe, paragraphs on Turing’s attack and mechanisation",
+      "basis": "Source account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "distinct-work",
+      "sourceId": "tnmoc-bombe",
+      "statement": "Interception, key recovery and reading messages were distinct tasks.",
+      "locator": "The Bombe, account from Y stations through key recovery",
+      "basis": "Synthesis of the described workflow",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "bombe-purpose",
+      "sourceId": "tnmoc-bombe",
+      "statement": "The Bombe helped search for settings; it was separate from the Enigma used for messages.",
+      "locator": "The Bombe, opening paragraph; Enigma section",
+      "basis": "Source account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "bombe-contributors",
+      "sourceId": "tnmoc-bombe",
+      "statement": "The account credits Turing, Welchman’s diagonal board and BTM engineering, and describes machine operators.",
+      "locator": "Introductory operator paragraph; The Bombe paragraphs on diagonal board and engineering",
+      "basis": "Source account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "bombe-limits",
+      "sourceId": "tnmoc-bombe",
+      "statement": "Some keys were never broken.",
+      "locator": "The Bombe, first paragraph",
+      "basis": "Source account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "m4-extra",
+      "sourceId": "crypto-museum-m4",
+      "statement": "M4 adds a Greek rotor beside a thin reflector.",
+      "locator": "Introduction, extra-rotor paragraph; Reflector section",
+      "basis": "Source account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "m4-stationary",
+      "sourceId": "crypto-museum-m4",
+      "statement": "The extra rotor is settable but does not advance during encipherment.",
+      "locator": "Introduction, extra-rotor paragraph; Extra rotor section",
+      "basis": "Source account",
+      "reviewedOn": "2026-09-27"
+    }
+  ],
+  "passages": [
+    {
+      "id": "commercial-origins",
+      "textDigest": "534eedfc1f20fc7180c4090f188376cb4a457d4a11a2c4b9460cf4c7852b36fa",
+      "detailDigest": "16efa6e5de796b137d827ba91a4de765a540685503daba94f70ff6d0bdf598f5",
+      "claimIds": [
+        "k-release",
+        "k-rotors",
+        "enigma-family"
+      ]
+    },
+    {
+      "id": "manual-procedure",
+      "textDigest": "aa87dc57870afd78137c9f9809158413ee6b12fb60f71639859295e96c8cf30f",
+      "detailDigest": "51413fd9d51441659b5dd2b633eba3e38e402bc4666cfeaa79b2bb69928cd070",
+      "claimIds": [
+        "manual-settings",
+        "manual-indicator",
+        "manual-provenance"
+      ]
+    },
+    {
+      "id": "polish-sharing",
+      "textDigest": "9b55780a8a1c2f5e9f738236fd7b48a16344aa5546440bd29437612d2696118c",
+      "detailDigest": "7c1d4161e9c22e234b35d641ce43b7daa575ade3477dddbe6f79d4bed31f7a49",
+      "claimIds": [
+        "pyry-exchange",
+        "pyry-impact"
+      ]
+    },
+    {
+      "id": "interception",
+      "textDigest": "175bd033b757e14138c78d9820d2bbe70a38a1fa8a6e77a6077b3638ca93a727",
+      "detailDigest": "d18716848faf2ebbb3785e33673fd6215d7e5c72616e06c82bb5a999d3f27b8a",
+      "claimIds": [
+        "y-interception",
+        "crib-search",
+        "distinct-work"
+      ]
+    },
+    {
+      "id": "bombe-search",
+      "textDigest": "465f5ccd1e8a9aa6d550db1d26f4155e12ace0f19f195b58adba6e4a160b1e16",
+      "detailDigest": "575354a931ebbf4b3287f835b013aa5d666ac5c5eb0bea4f3395c1f0c75058b3",
+      "claimIds": [
+        "bombe-purpose",
+        "bombe-contributors",
+        "bombe-limits"
+      ]
+    },
+    {
+      "id": "naval-fourth-rotor",
+      "textDigest": "f411fb9f049313fe1615a341b108ad28c6203ab1a62c191b7d77a09e95ca1547",
+      "detailDigest": "b823a44fd398262827803278646a439a2b00a996f32bbcb3aaae6d55c185e3dd",
+      "claimIds": [
+        "m4-extra",
+        "m4-stationary"
+      ]
+    }
+  ]
+}

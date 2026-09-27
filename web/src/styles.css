@@ -1758,3 +1758,23 @@ button[aria-disabled="true"]:hover {
     padding: 20px;
   }
 }
+.claim-evidence {
+  margin-top: 18px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.claim-evidence summary {
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+.claim-evidence ul {
+  padding-left: 18px;
+}
+.claim-evidence li {
+  margin: 12px 0;
+}
+.claim-evidence li p {
+  margin: 5px 0;
+  font-size: 12px;
+}

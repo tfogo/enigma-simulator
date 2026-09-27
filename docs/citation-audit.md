@@ -1,6 +1,6 @@
 # Citation coverage record
 
-Reviewed structurally on 27 September 2026. Source support and access limitations are recorded in `sources.json`; frontend annotations resolve those records in `web/src/content.ts`.
+Structural checks and a review of the six current History passages were completed on 27 September 2026. Source support and access limitations are recorded in `sources.json`; frontend annotations resolve those records in `web/src/content.ts`.
 
 | Content | Source record | Evidence location / scope |
 | --- | --- | --- |
@@ -17,4 +17,4 @@ Reviewed structurally on 27 September 2026. Source support and access limitation
 
 Latest access exception: the working-principle page returned a verification interstitial on a repeat visit. Earlier checked evidence is retained with a visible access update. Do not mark a verification page as successful content access.
 
-Remaining editorial work: assign stable IDs to individual historical claims, distinguish direct documentary observations from later interpretations at sentence level, independently review the broader wartime narrative, and verify sources again before release. Never remove a limitation merely to make the audit appear complete.
+The current History passages now resolve sixteen stable claim IDs in `history-claims.json`, with locators and evidence-type labels. Reviewed passage digests flag later copy changes for another editorial review. See decision 0009 for scope. Remaining editorial work: extend this claim-level treatment to other content and any broader wartime narrative, obtain independent historical review where possible, and verify sources again before release. Never remove a limitation merely to make the audit appear complete.

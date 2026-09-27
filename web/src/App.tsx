@@ -775,6 +775,30 @@ export default function App() {
                       </button>
                     )}
                   </details>
+                  <details className="claim-evidence">
+                    <summary>Evidence for this passage</summary>
+                    <ul>
+                      {chapter.evidence.map((claim) => (
+                        <li key={claim.id}>
+                          <p>{claim.statement}</p>
+                          <p className="tiny">
+                            <a
+                              href={claim.url}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {claim.sourceTitle} ↗
+                            </a>{" "}
+                            · {claim.locator}
+                          </p>
+                          <p className="tiny muted">
+                            {claim.basis} · {claim.id} · Reviewed{" "}
+                            {claim.reviewedOn}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
                   <SourceNote id={chapter.source} />
                 </article>
               ))}

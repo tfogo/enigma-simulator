@@ -1,3 +1,4 @@
+import historyAudit from "../../docs/history-claims.json";
 import sourceLedger from "../../docs/sources.json";
 
 export const readings = [
@@ -106,6 +107,7 @@ export const readings = [
 });
 export const history = [
   {
+    id: "commercial-origins",
     era: "1927",
     title: "Before the battlefield",
     text: "Enigma was a family of machines with commercial as well as military branches. The commercial Enigma K, introduced in 1927, used three cipher rotors and a manually settable reflector.",
@@ -115,6 +117,7 @@ export const history = [
       "Different models could have different wiring and mechanics. The military machine in this lesson is only one part of that family.",
   },
   {
+    id: "manual-procedure",
     era: "1930 MANUAL",
     title: "An operator needed more than a machine",
     text: "A surviving manual example specifies rotor order, ring settings, plugboard pairs, and starting windows. Its six-letter indicator recovers a message key; the body begins from that new position.",
@@ -124,6 +127,7 @@ export const history = [
       "Frode Weierud transcribes an example from a manual translation held under HW25/9 at the British National Archives. We checked the transcription, not the archival original. This is a training example predating the war, not an intercepted wartime message. Try its indicator or body below; each starts a fresh Explore message.",
   },
   {
+    id: "polish-sharing",
     era: "1939",
     title: "Knowledge shared in Poland",
     text: "In July 1939, Polish cryptanalysts shared their Enigma work with French and British colleagues near Warsaw. Their progress transformed the British approach to the problem.",
@@ -133,6 +137,7 @@ export const history = [
       "The wartime effort grew from earlier achievements and cooperation. GCHQ’s account describes the importance of the Polish work and Marian Rejewski’s later discussions with Alan Turing.",
   },
   {
+    id: "interception",
     era: "WARTIME INTERCEPTION",
     title: "From radio traffic to a cryptanalytic problem",
     text: "Y stations intercepted communications, including Enigma traffic. At Bletchley Park, codebreakers used cribs—suspected plaintext—to test possible keys. Interception and key recovery were distinct parts of the work.",
@@ -142,6 +147,7 @@ export const history = [
       "A crib suggested a possible correspondence between plaintext and ciphertext. The Bombe mechanised testing constraints from such guesses; it did not simply accept any intercepted message and print its meaning.",
   },
   {
+    id: "bombe-search",
     era: "WARTIME",
     title: "Finding the settings",
     text: "The Turing–Welchman Bombe helped the codebreakers search for Enigma settings. It was a separate machine with a different job from the Enigma used to encipher messages.",
@@ -151,6 +157,7 @@ export const history = [
       "Turing’s approach and Welchman’s diagonal board helped mechanise the search. The museum also describes the British Tabulating Machine Company’s engineering work and the people who operated the machines. Some keys were never recovered.",
   },
   {
+    id: "naval-fourth-rotor",
     era: "NAVAL M4",
     title: "A fourth rotor, a new variable",
     text: "The naval M4 added a thin Greek rotor beside its thin reflector. This rotor could be set by the operator but did not step as letters were typed.",
@@ -159,4 +166,13 @@ export const history = [
     detail:
       "Choose M4 in Explore and type a few letters. Watch the leftmost window stay still while the fast rotor advances.",
   },
-];
+].map((chapter) => {
+  const passage = historyAudit.passages.find((item) => item.id === chapter.id);
+  if (!passage) throw new Error(`Missing history audit for ${chapter.id}`);
+  const evidence = passage.claimIds.map((id) => {
+    const claim = historyAudit.claims.find((item) => item.id === id)!;
+    const source = sourceLedger.find((item) => item.id === claim.sourceId)!;
+    return { ...claim, url: source.url, sourceTitle: source.title };
+  });
+  return { ...chapter, evidence };
+});

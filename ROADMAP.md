@@ -285,7 +285,7 @@ Integration uses the implemented M4 workflows. Manual M4 accessibility verificat
 - [ ] Verify claim-level citations, precise locators, source-access labels, and accessible navigation between content and references.
 - [x] Include one fully sourced historical example that runs in the simulator (1930 manual indicator and body, with transcription access clearly labelled).
 - [ ] Review all machine claims against fixtures and all historical claims against the ledger.
-- [ ] Trial with a small group of beginners; observe confusion rather than relying only on satisfaction ratings.
+- [ ] Trial with a small group of beginners; observe confusion rather than relying only on satisfaction ratings. The [trial protocol](docs/beginner-trial.md) is ready; no sessions have been conducted.
 
 Done when: beginners can explain why state changes, why reset is needed, and how the machine fits into a wider human communications system.
 
@@ -391,3 +391,5 @@ These are starting points, not blanket verification of every future narrative cl
 - **S12:** [The National Museum of Computing — Colossus](https://www.tnmoc.org/colossus): Lorenz/Colossus distinction.
 - **S13:** [Bletchley Park — Activity role profiles](https://bletchleypark.org.uk/wp-content/uploads/2025/01/Bletchley-Park-Activity-Role-Profiles-V3-small.pdf): roles and operational work; starting point for deeper personnel research.
 - **S14:** [Science Museum Group Journal — Zygalski sheets](https://journal.sciencemuseum.ac.uk/article/zygalski-sheets-polish-codebreaking-and-the-role-of-reconstruction-in-the-top-secret-exhibition-at-the-science-museum/): Polish methods, artifacts, and reconstruction.
+
+The six current History passages have sixteen reviewed claim records with copy-drift checks; see [the claim-review decision](docs/decisions/0009-history-claim-review.md). This does not close the broader release audit or user-trial requirements.
