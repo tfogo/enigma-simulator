@@ -47,3 +47,7 @@ For a later npm release, agree the major version (4.0.0 is proposed), update the
 - Remote CI will only be known after pushing. The correction issue template likewise becomes available on GitHub after that push.
 
 The remaining curriculum, comparisons, detailed operating procedures, historical variants, and optional codebreaking/classroom tools are M7–M9. They are outside the first learning release and should build on feedback. Deferring deployment does not imply those optional expansions have already been implemented.
+
+## Local verification result
+
+Candidate `ecae330` passed a clean installation, 110 engine tests, consumer type checks, both root and subdirectory production builds, and the independent tarball/browser check. The full working-checkout browser run passed 96 cases across Chromium desktop/mobile, Firefox, and WebKit. The subdirectory smoke check covered M4 share/reload, every view, software credits, and unavailable external fonts. Nothing was pushed or deployed.
