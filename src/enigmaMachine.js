@@ -5,6 +5,7 @@ const Rotor = require('./rotor');
 const rotorTypes = require('./rotorTypes');
 const reflectorTypes = require('./reflectorTypes');
 const { settings, character } = require('./validation');
+const { resolveConfiguration, objectFields, configFields } = require('./models');
 const GREEK_ROTORS = ['Beta', 'Gamma'];
 
 class EnigmaMachine {
@@ -31,6 +32,9 @@ class EnigmaMachine {
     if (reflector.endsWith('Thin') !== (rotors.length === 4)) {
       throw new RangeError('Use a thin reflector with four rotors and a thick reflector with three rotors');
     }
+    if (reflector === 'A' && rotors.some(name => !['I', 'II', 'III', 'IV', 'V'].includes(name))) {
+      throw new RangeError('Reflector A requires the Enigma I rotor family I-V');
+    }
     if (positions === undefined) positions = Array(rotors.length).fill(0);
     if (ringSettings === undefined) ringSettings = Array(rotors.length).fill(0);
     settings(positions, rotors.length, 'positions');
@@ -40,7 +44,68 @@ class EnigmaMachine {
     // Preserve the existing internal fast-to-slow array order.
     this.rotors = rotors.map((name, i) => new Rotor(name, ringSettings[i], positions[i])).reverse();
     this.reflector = reflectorTypes[reflector];
+    this.reflectorType = reflector;
+    this.model = rotors.length === 4 ? 'M4' : reflector === 'A' ? 'EnigmaI' : 'M3';
     this.initialPositions = Object.freeze([...positions]);
+  }
+
+  static fromConfiguration(options) {
+    const config = resolveConfiguration(options);
+    const machine = new EnigmaMachine(config.rotors, config.positions, config.ringSettings, config.reflector, config.plugboardPairs);
+    machine.model = config.model;
+    return machine;
+  }
+
+  static fromSnapshot(snapshot) {
+    objectFields(snapshot, ['schemaVersion', 'configuration', 'state'], 'snapshot', ['schemaVersion', 'configuration', 'state']);
+    if (snapshot.schemaVersion !== 1) throw new RangeError('Unsupported snapshot schemaVersion');
+    objectFields(snapshot.configuration, configFields, 'configuration', configFields);
+    objectFields(snapshot.state, ['positions'], 'state', ['positions']);
+    const machine = EnigmaMachine.fromConfiguration(snapshot.configuration);
+    machine.setPosition(snapshot.state.positions);
+    return machine;
+  }
+
+  static deserialize(json) {
+    if (typeof json !== 'string') throw new TypeError('Serialized snapshot must be a JSON string');
+    return EnigmaMachine.fromSnapshot(JSON.parse(json));
+  }
+
+  getConfiguration() {
+    const pairs = [];
+    for (let i = 0; i < 26; i++) {
+      if (this.plugboard[i] > ALPHABET[i]) pairs.push(ALPHABET[i] + this.plugboard[i]);
+    }
+    return {
+      model: this.model,
+      rotors: this.rotors.map(r => r.rotorType).reverse(),
+      positions: [...this.initialPositions],
+      ringSettings: this.rotors.map(r => r.ringSetting).reverse(),
+      reflector: this.reflectorType,
+      plugboardPairs: pairs.join(' '),
+    };
+  }
+
+  getState() {
+    return { positions: this.rotors.map(r => r.position).reverse() };
+  }
+
+  snapshot() {
+    return { schemaVersion: 1, configuration: this.getConfiguration(), state: this.getState() };
+  }
+
+  serialize() {
+    return JSON.stringify(this.snapshot());
+  }
+
+  restore(snapshot) {
+    // Build and validate a complete replacement before touching the live machine.
+    const restored = EnigmaMachine.fromSnapshot(snapshot);
+    Object.assign(this, restored);
+  }
+
+  clone() {
+    return EnigmaMachine.fromSnapshot(this.snapshot());
   }
 
   generatePlugboard(pairs) {

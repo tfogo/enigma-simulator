@@ -1,4 +1,6 @@
 module.exports = {
+  // Crypto Museum wiring catalogue, Enigma I / Service Enigma.
+  A: 'EJMZALYXVBWFCRQUONTSPIKHGD',
   B: 'YRUHQSLDPXNGOKMIEBFZCWVJAT',
   C: 'FVPJIAOYEDRZXWGCTKUQSBNMHL',
   BThin: 'ENKQAUYWJICOPBLMDXZVFTHRGS',

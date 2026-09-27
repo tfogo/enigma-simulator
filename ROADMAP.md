@@ -234,8 +234,8 @@ Done when: documented supported configurations pass sourced fixtures, invalid op
 
 Depends on M1.
 
-- [ ] Add the named configuration API and historical model profiles, including reflector A.
-- [ ] Add inspection, cloning, snapshots, restoration, and versioned export/import.
+- [x] Add the named configuration API and historical model profiles, including reflector A.
+- [x] Add inspection, cloning, snapshots, restoration, and versioned export/import.
 - [ ] Produce trace data from the actual encoding path.
 - [ ] Add explicit stepping reasons and stable component/slot identifiers.
 - [ ] Test replay, trace consistency, serialization, malformed imports, and M3/M4 equivalence.

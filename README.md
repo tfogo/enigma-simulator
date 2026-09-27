@@ -40,6 +40,28 @@ m4.encodeString('ABC'); // 'BPF'
 
 ## Documentation
 
+### Named configuration and saved state
+
+```js
+const machine = enigma({
+  model: 'M4',
+  rotors: ['Beta', 'II', 'IV', 'I'],
+  positions: [21, 9, 13, 0],
+  ringSettings: [0, 0, 0, 21],
+  reflector: 'BThin',
+  plugboardPairs: 'AT BL DF GJ HM NW OP QY RZ VX',
+});
+const checkpoint = machine.snapshot();
+machine.encodeString('HELLO');
+const resumed = enigma.deserialize(machine.serialize());
+const independentCopy = resumed.clone();
+machine.restore(checkpoint);
+```
+
+Named configurations support `EnigmaI`, `M3` (default), and `M4`, with model-specific rotor and reflector defaults. Enigma I allows I–V and reflectors A/B/C; M3 allows I–VIII and B/C; M4 requires Beta/Gamma plus three I–VIII rotors and a thin reflector. Use `enigma.getModelProfiles()` for detached profile descriptions, constraints, and historical source links. These profiles are component families, not dated operating instructions.
+
+`getConfiguration()` returns initial/reset positions and the chosen settings. `getState()` returns current positions. Both use left-to-right arrays and return independent copies. Snapshots contain both, with `schemaVersion: 1`. Import objects with `enigma.fromSnapshot(snapshot)` or JSON with `enigma.deserialize(json)`. `restore(snapshot)` validates before changing anything and can restore a different model. Missing/unknown snapshot fields, unsupported versions, and invalid settings are rejected. Do not mix named and positional factory arguments.
+
 ### enigma()
 
 #### Syntax
@@ -80,6 +102,7 @@ Defaults to `['III', 'II', 'I']`. Input arrays are copied, never reversed or mod
 
 | Reflector | Encoding | Notes |
 | --- | --- | --- |
+| `'A'` | EJMZALYXVBWFCRQUONTSPIKHGD | Earlier Enigma I reflector |
 | `'B'` | YRUHQSLDPXNGOKMIEBFZCWVJAT |  |
 | `'C'` | FVPJIAOYEDRZXWGCTKUQSBNMHL |  |
 | `'BThin'` | ENKQAUYWJICOPBLMDXZVFTHRGS | Kriegsmarine M4 |

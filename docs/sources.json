@@ -79,5 +79,24 @@
       "A single-notch three-wheel Enigma with Enigma stepping has period 16900"
     ],
     "notes": "Resolves the discrepancy with the Crypto Museum working-principle page. The test independently enumerates one full cycle from AAA."
+  },
+  {
+    "id": "crypto-museum-wiring",
+    "title": "Enigma wiring",
+    "institution": "Crypto Museum",
+    "url": "https://www.cryptomuseum.com/crypto/enigma/wiring.htm",
+    "accessed": "2026-09-27",
+    "type": "museum component catalogue",
+    "locators": [
+      "Enigma I / Service Enigma",
+      "Enigma M3",
+      "Enigma M4"
+    ],
+    "claims": [
+      "Enigma I uses moving rotors I-V and lists reflectors A/B/C",
+      "Naval M3 shares I-V and adds VI-VIII; M4 adds Beta/Gamma with thin reflectors",
+      "Reflector A wiring is EJMZALYXVBWFCRQUONTSPIKHGD"
+    ],
+    "notes": "Profiles express component families across their history, not a dated key sheet or proof that every permitted combination was operationally used."
   }
 ]

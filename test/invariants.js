@@ -38,7 +38,7 @@ describe('Electrical and state invariants', () => {
     it(`${name}: the complete fixed-state mapping is reciprocal and has no self letters`, () => {
       const thin = name.endsWith('Thin');
       const machine = enigma(
-        thin ? ['Gamma', 'V', 'VIII', 'VI'] : ['V', 'VIII', 'VI'],
+        thin ? ['Gamma', 'V', 'VIII', 'VI'] : name === 'A' ? ['V', 'IV', 'I'] : ['V', 'VIII', 'VI'],
         thin ? [9, 1, 12, 25] : [1, 12, 25],
         thin ? [5, 20, 2, 19] : [20, 2, 19],
         name, 'AZ BV CU DT ES FR GQ HP IO JN'
