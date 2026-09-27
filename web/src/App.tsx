@@ -58,7 +58,7 @@ function Mark() {
     </svg>
   );
 }
-export function SourceNote({ id }: { id: string }) {
+export function SourceNote({ id, locator }: { id: string; locator?: string }) {
   const openReference = useContext(SourceNavigation);
   const source = readings.find((r) => r.id === id)!;
   return (
@@ -72,7 +72,7 @@ export function SourceNote({ id }: { id: string }) {
       </a>
       <p>{source.note}</p>
       <p className="tiny muted">
-        Look for: {source.locator}. Opens in a new tab. Checked{" "}
+        Look for: {locator ?? source.locator}. Opens in a new tab. Checked{" "}
         {source.accessed}.
       </p>
       <p className="tiny muted">Evidence note: {source.evidence}</p>
@@ -380,7 +380,7 @@ export default function App() {
                         ? () => startLesson(lessonIndex + 1)
                         : undefined
                     }
-                    sourceNote={<SourceNote id={lesson.source} />}
+                    sourceNote={<SourceNote id={lesson.source} locator={lesson.locator} />}
                   />
                 ) : (
                   <section
@@ -563,7 +563,7 @@ export default function App() {
                         </>
                       )}
                     </div>
-                    <SourceNote id="mechanism" />
+                    <SourceNote id="mechanism" locator={lesson.locator} />
                     {lessonStep > 0 && (
                       <button
                         className="text-button restart"
@@ -842,6 +842,7 @@ export default function App() {
                       <dt>{item.term}</dt>
                       <dd>
                         {item.definition}{" "}
+                        <span className="tiny muted">Look for: {item.locator}. </span>
                         <button
                           className="text-button"
                           onClick={() => openReference(item.source)}

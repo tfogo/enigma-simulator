@@ -7,6 +7,7 @@ export interface Lesson {
   prerequisite: string;
   configuration: enigma.Configuration;
   source: string;
+  locator: string;
   question: string;
   choices: { text: string; correct: boolean; feedback: string }[];
 }
@@ -19,6 +20,7 @@ export const lessons: Lesson[] = [
     prerequisite: "No experience needed.",
     configuration,
     source: "mechanism",
+    locator: "Rotor stepping, first paragraph; Rotor wiring",
     question: "Why can the same key produce a different letter?",
     choices: [
       {
@@ -42,6 +44,7 @@ export const lessons: Lesson[] = [
     prerequisite: "Try lesson 1 first.",
     configuration,
     source: "mechanism",
+    locator: "Rotor stepping; repetition follows from thirty keypresses and 26 lamps",
     question: "Predict what happens when we press A thirty times.",
     choices: [
       {
@@ -66,6 +69,7 @@ export const lessons: Lesson[] = [
     prerequisite: "Try lessons 1–2 first.",
     configuration: { model: "EnigmaI", plugboardPairs: "AB CD" },
     source: "mechanism",
+    locator: "Circuit description; Reflector UKW; The Steckerbrett",
     question: "How many times does one signal pass through each rotor?",
     choices: [
       {
@@ -90,6 +94,7 @@ export const lessons: Lesson[] = [
     prerequisite: "Try lessons 1–3 first.",
     configuration,
     source: "mechanism",
+    locator: "Setup paragraph before Rotors; same circuit in reverse",
     question:
       "What must we do before entering the ciphertext to read HELLO again?",
     choices: [

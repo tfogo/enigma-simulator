@@ -12,7 +12,7 @@ test("historical indicator and body reproduce the shared reference fixtures", as
     .getByRole("navigation")
     .getByRole("button", { name: /History$/ })
     .click();
-  await expect(page.locator(".history-card")).toHaveCount(6);
+  await expect(page.locator(".history-card")).toHaveCount(7);
   await page
     .getByText("Reproduce the documented example", { exact: true })
     .click();

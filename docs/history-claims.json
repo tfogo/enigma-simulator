@@ -128,6 +128,30 @@
       "locator": "Introduction, extra-rotor paragraph; Extra rotor section",
       "basis": "Source account",
       "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "bombe-operators",
+      "sourceId": "tnmoc-bombe",
+      "statement": "Women in the WRNS and men in the RAF participated in the Bombe organisation.",
+      "locator": "Introductory paragraph beginning “The Turing-Welchman Bombe machine”",
+      "basis": "Museum historical account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "lorenz-purpose",
+      "sourceId": "tnmoc-colossus",
+      "statement": "Colossus helped find Lorenz chi-wheel settings for communications between Hitler and his generals.",
+      "locator": "Opening account, first four paragraphs",
+      "basis": "Museum historical account",
+      "reviewedOn": "2026-09-27"
+    },
+    {
+      "id": "colossus-engineering",
+      "sourceId": "tnmoc-colossus",
+      "statement": "Tommy Flowers and colleagues built Colossus at the Post Office Research Station.",
+      "locator": "The Colossus Computer, first paragraph",
+      "basis": "Museum historical account",
+      "reviewedOn": "2026-09-27"
     }
   ],
   "passages": [
@@ -173,11 +197,12 @@
     {
       "id": "bombe-search",
       "textDigest": "465f5ccd1e8a9aa6d550db1d26f4155e12ace0f19f195b58adba6e4a160b1e16",
-      "detailDigest": "575354a931ebbf4b3287f835b013aa5d666ac5c5eb0bea4f3395c1f0c75058b3",
+      "detailDigest": "7ec61ecffd5e9c4a68b9b1925c502aa6a46efbe40c7b63bae6caf10b54714e7b",
       "claimIds": [
         "bombe-purpose",
         "bombe-contributors",
-        "bombe-limits"
+        "bombe-limits",
+        "bombe-operators"
       ]
     },
     {
@@ -188,6 +213,16 @@
         "m4-extra",
         "m4-stationary"
       ]
+    },
+    {
+      "id": "lorenz-colossus",
+      "claimIds": [
+        "lorenz-purpose",
+        "colossus-engineering",
+        "bombe-purpose"
+      ],
+      "textDigest": "092926d89ba59d5a0430fbd29a6b80ac833c5f9eb570db66858bcbf8c08f4342",
+      "detailDigest": "beda8a2e3fae4407e4febb9c28af5cb3e0a73345a1b7a3755e23e113d3f666d3"
     }
   ]
 }

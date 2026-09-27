@@ -9,17 +9,24 @@
     "locators": [
       "Rotor stepping",
       "Double stepping of the middle rotor",
-      "The Steckerbrett"
+      "The Steckerbrett",
+      "Circuit description before Rotors",
+      "Rotor wiring, first paragraph",
+      "Rotor stepping, index-ring paragraph",
+      "Reflector UKW"
     ],
     "claims": [
       "The electrical circuit is activated after stepping",
       "On these military rotors the turnover notch follows the index ring",
       "III-II-I windows progress ADO, ADP, ADQ, AER, BFS, BFT, BFU",
-      "The plugboard physically supports up to thirteen disjoint pairs"
+      "The plugboard physically supports up to thirteen disjoint pairs",
+      "The signal returns through the rotor stack after the reflector",
+      "Window position and index-ring alignment are separate settings",
+      "The plugboard swaps paired letters on both legs of the circuit; unpaired letters pass unchanged"
     ],
     "notes": "The page gives a period of 16926. We do not adopt that claim: the specialist Enigma Variations paper gives 16900, agreeing with complete cycle enumeration. Retain the page for the individually checked stepping sequence and other listed claims.",
     "latestAccessAttempt": "2026-09-27",
-    "latestAccessOutcome": "The latest retry returned a verification page. Earlier checked material and its recorded limitations are retained; this was not a fresh content verification."
+    "latestAccessOutcome": "A repeat visit returned a verification page; a subsequent check on 27 September 2026 returned readable content. Circuit, Rotor wiring, Rotor stepping, Reflector and Steckerbrett sections were checked again. The period disagreement remains."
   },
   {
     "id": "py-enigma-guide",
@@ -172,5 +179,22 @@
       "Some keys were never broken"
     ],
     "notes": "Used only for the listed claims; do not adopt the page’s loose prewar chronology as authority for dates of Polish breakthroughs."
+  },
+  {
+    "id": "tnmoc-colossus",
+    "title": "Colossus",
+    "institution": "The National Museum of Computing",
+    "url": "https://www.tnmoc.org/colossus",
+    "accessed": "2026-09-27",
+    "type": "museum historical and technical account",
+    "locators": [
+      "Opening account",
+      "The Colossus Computer, first paragraph"
+    ],
+    "claims": [
+      "Colossus helped recover Lorenz chi-wheel settings for high-level German communications",
+      "Tommy Flowers and colleagues built Colossus at the Post Office Research Station"
+    ],
+    "notes": "Used for the Lorenz/Colossus distinction and engineering attribution. Claims about lives saved or duration of the war are not adopted."
   }
 ]

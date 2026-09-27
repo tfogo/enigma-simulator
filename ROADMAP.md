@@ -278,20 +278,20 @@ Integration uses the implemented M4 workflows. Manual M4 accessibility verificat
 
 - [x] Build the lesson schema, progress controls, prediction questions, feedback, and deterministic resets.
 - [x] Implement lessons 1–4 with automated checks and optional deeper reading (available in the local preview; public publication remains M6).
-- [ ] Publish a concise, sourced history route covering origins, the Polish contribution, wartime operation, and the Allied codebreaking workflow.
+- [x] Implement and internally review a concise, sourced history route covering origins, the Polish contribution, wartime operation, and the Allied codebreaking workflow. Seven passages are available locally; public publication is deferred to M6.
 - [x] Add the glossary and first artifact/source records (searchable terms, expanded evidence records, and the runnable 1930 document example).
 - [x] Implement the shared source registry, contextual citation notes, and searchable reference library.
 - [x] Add annotated further reading to every implemented history chapter and relevant lesson.
-- [ ] Verify claim-level citations, precise locators, source-access labels, and accessible navigation between content and references.
+- [x] Verify claim-level citations, precise locators, source-access labels, and keyboard/browser navigation between content and references for the initial scope. Manual reader checks remain under M4.
 - [x] Include one fully sourced historical example that runs in the simulator (1930 manual indicator and body, with transcription access clearly labelled).
-- [ ] Review all machine claims against fixtures and all historical claims against the ledger.
+- [x] Internally review implemented machine claims against fixtures and historical claims against the ledger; see decision 0011. Independent peer review remains desirable.
 - [ ] Trial with a small group of beginners; observe confusion rather than relying only on satisfaction ratings. The [trial protocol](docs/beginner-trial.md) is ready; no sessions have been conducted.
 
 Done when: beginners can explain why state changes, why reset is needed, and how the machine fits into a wider human communications system.
 
 Glossary and contextual source navigation are recorded in [the reading-support decision](docs/decisions/0008-glossary-and-source-navigation.md). See [the citation coverage record](docs/citation-audit.md) for the completed structural checks and remaining historical audit.
 
-The shared source registry and 1930 example are recorded in [the history decision](docs/decisions/0007-history-and-document-example.md). The initial route now has six sourced sections; a fuller historical narrative and finer-grained citation audit remain open.
+The shared source registry and 1930 example are recorded in [the history decision](docs/decisions/0007-history-and-document-example.md). The initial route now has seven sourced sections with a completed internal citation audit; fuller historical chapters remain M7 work.
 
 ### M6 — First public release (medium)
 
@@ -392,4 +392,4 @@ These are starting points, not blanket verification of every future narrative cl
 - **S13:** [Bletchley Park — Activity role profiles](https://bletchleypark.org.uk/wp-content/uploads/2025/01/Bletchley-Park-Activity-Role-Profiles-V3-small.pdf): roles and operational work; starting point for deeper personnel research.
 - **S14:** [Science Museum Group Journal — Zygalski sheets](https://journal.sciencemuseum.ac.uk/article/zygalski-sheets-polish-codebreaking-and-the-role-of-reconstruction-in-the-top-secret-exhibition-at-the-science-museum/): Polish methods, artifacts, and reconstruction.
 
-The six current History passages have sixteen reviewed claim records with copy-drift checks; see [the claim-review decision](docs/decisions/0009-history-claim-review.md). This does not close the broader release audit or user-trial requirements.
+The seven current History passages have nineteen reviewed claim records with copy-drift checks; see [the claim-review decision](docs/decisions/0009-history-claim-review.md). This does not close the broader release audit or user-trial requirements.

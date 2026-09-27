@@ -1,0 +1,61 @@
+{
+  "checkedOn": "2026-09-27",
+  "method": "Browser research tool returned readable HTML or PDF; claim support reviewed separately in citation-audit.md",
+  "sources": [
+    {
+      "id": "crypto-museum-working",
+      "url": "https://www.cryptomuseum.com/crypto/enigma/working.htm",
+      "outcome": "readable content"
+    },
+    {
+      "id": "py-enigma-guide",
+      "url": "https://py-enigma.readthedocs.io/en/latest/guide.html",
+      "outcome": "readable content"
+    },
+    {
+      "id": "m4-first-break",
+      "url": "https://www.bytereef.org/m4-project-first-break.html",
+      "outcome": "readable content"
+    },
+    {
+      "id": "crypto-museum-m4",
+      "url": "https://www.cryptomuseum.com/crypto/enigma/m4/index.htm",
+      "outcome": "readable content"
+    },
+    {
+      "id": "enigma-variations",
+      "url": "https://cryptocellar.org/pubs/enigvar.pdf",
+      "outcome": "readable content"
+    },
+    {
+      "id": "crypto-museum-wiring",
+      "url": "https://www.cryptomuseum.com/crypto/enigma/wiring.htm",
+      "outcome": "readable content"
+    },
+    {
+      "id": "crypto-cellar-1930",
+      "url": "https://cryptocellar.org/enigma/e-message-1930.html",
+      "outcome": "readable content"
+    },
+    {
+      "id": "crypto-museum-k",
+      "url": "https://www.cryptomuseum.com/crypto/enigma/k/index.htm",
+      "outcome": "readable content"
+    },
+    {
+      "id": "gchq-pyry",
+      "url": "https://www.gchq.gov.uk/information/the-pyry-forest-meeting",
+      "outcome": "readable content"
+    },
+    {
+      "id": "tnmoc-bombe",
+      "url": "https://www.tnmoc.org/bombe",
+      "outcome": "readable content"
+    },
+    {
+      "id": "tnmoc-colossus",
+      "url": "https://www.tnmoc.org/colossus",
+      "outcome": "readable content"
+    }
+  ]
+}

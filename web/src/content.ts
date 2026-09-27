@@ -80,6 +80,17 @@ export const readings = [
     note: "A worked example from an operating manual, reproduced with the settings needed to check it. We checked this transcription, not the archive original.",
   },
   {
+    id: "colossus",
+    title: "Colossus and the Lorenz cipher",
+    author: "The National Museum of Computing",
+    kind: "Museum explanation",
+    level: "Start here",
+    topic: "History",
+    sourceId: "tnmoc-colossus",
+    locator: "Opening account; The Colossus Computer",
+    note: "Explore a different cipher system and the electronic machine built to help recover its settings.",
+  },
+  {
     id: "naval",
     title: "Enigma M4",
     author: "Crypto Museum",
@@ -154,7 +165,7 @@ export const history = [
     source: "bombe",
     question: "Meet another machine",
     detail:
-      "Turing’s approach and Welchman’s diagonal board helped mechanise the search. The museum also describes the British Tabulating Machine Company’s engineering work and the people who operated the machines. Some keys were never recovered.",
+      "Turing’s approach and Welchman’s diagonal board helped mechanise the search. The British Tabulating Machine Company supplied engineering work. Women in the WRNS and men in the RAF helped operate the Bombe organisation, as the museum’s account records. Some keys were never recovered.",
   },
   {
     id: "naval-fourth-rotor",
@@ -165,6 +176,15 @@ export const history = [
     question: "Try it for yourself",
     detail:
       "Choose M4 in Explore and type a few letters. Watch the leftmost window stay still while the fast rotor advances.",
+  },
+  {
+    id: "lorenz-colossus",
+    era: "ANOTHER WARTIME CIPHER",
+    title: "Enigma was one part of the story",
+    text: "Colossus helped attack Lorenz-encrypted communications between Hitler and his generals. Lorenz was a different cipher system from Enigma; its electronic codebreaking machinery had a different task from the Bombe.",
+    source: "colossus",
+    question: "Different systems, different work",
+    detail: "Colossus helped find Lorenz chi-wheel settings. Tommy Flowers and colleagues built it at the Post Office Research Station. Keeping these systems distinct helps us understand the range of work behind wartime codebreaking.",
   },
 ].map((chapter) => {
   const passage = historyAudit.passages.find((item) => item.id === chapter.id);
