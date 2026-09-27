@@ -1492,3 +1492,91 @@ footer {
     scroll-behavior: auto !important;
   }
 }
+
+.message-tools,
+.session-tools {
+  margin-top: 22px;
+  padding: 26px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+}
+.message-tools h2,
+.session-tools h2 {
+  font-size: 30px;
+  margin: 7px 0 20px;
+}
+.message-tools label,
+.session-tools label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 14px 0;
+}
+.message-tools textarea,
+.session-tools textarea,
+.message-tools select {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  color: var(--ink);
+  background: #fffef9;
+  border: 1px solid #a4ac99;
+  border-radius: 4px;
+  font: 13px/1.6 var(--mono);
+}
+textarea {
+  resize: vertical;
+}
+textarea:focus-visible,
+.signal-viewport:focus-visible {
+  outline: 3px solid #ba741c;
+  outline-offset: 4px;
+}
+.message-preview {
+  margin: 15px 0 8px;
+  background: #efefe4;
+  padding: 14px;
+}
+.message-preview p {
+  font-family: var(--mono);
+  overflow-wrap: anywhere;
+}
+.message-tools .primary {
+  margin-top: 14px;
+  width: auto;
+}
+.message-utilities {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+.message-utilities .check-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+.message-utilities input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--green);
+}
+.session-tools details {
+  margin-top: 18px;
+}
+.session-tools summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+@media (max-width: 480px) {
+  .message-tools,
+  .session-tools {
+    padding: 20px;
+  }
+}

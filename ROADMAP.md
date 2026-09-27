@@ -1,6 +1,6 @@
 # Enigma Simulator: implementation and learning roadmap
 
-Status: implementation underway, 27 September 2026. M0–M2 are implemented and locally verified; M3 has a working desktop/mobile prototype awaiting user review. CI configuration is added but has not run remotely. No release has been published.
+Status: implementation underway, 27 September 2026. M0–M2 are implemented and locally verified; M3 is reviewed; M4 message workflows, snapshot restoration, and sharing are implemented. Sequenced animation and manual assistive-technology checks remain. CI configuration is added but has not run remotely. No release has been published.
 
 ## 1. Product direction
 
@@ -253,7 +253,7 @@ Verified locally: 110 runtime tests plus strict TypeScript consumer checks on No
 - [x] Show both signal directions with labels and shapes as well as color.
 - [x] Design rotor/ring controls, plugboard editing, errors, starting/current states, and reset.
 - [x] Define focus order, keyboard operations, reduced-motion behavior, and textual alternatives.
-- [ ] Review with the user before expanding into the full interface.
+- [x] Review with the user before expanding into the full interface.
 
 Done when: the intended beginner interaction and advanced controls are concrete and reviewable at both screen sizes.
 
@@ -261,13 +261,13 @@ Done when: the intended beginner interaction and advanced controls are concrete 
 
 Depends on M2 and M3.
 
-- [ ] Set up the frontend build while preserving independent library packaging.
-- [ ] Implement keyboard, lampboard, windows, model selection, rotor/ring configuration, reflector, and plugboard.
-- [ ] Implement input/output with an explicit normalization preview for free text.
+- [x] Set up the frontend build while preserving independent library packaging.
+- [x] Implement keyboard, lampboard, windows, model selection, rotor/ring configuration, reflector, and plugboard.
+- [x] Implement input/output with an explicit normalization preview for free text.
 - [ ] Animate stepping before the signal; provide pause, next stage, and immediate-result modes.
-- [ ] Add textual traces, reset, undo through snapshots, history replay, and copy/export.
-- [ ] Define and test rapid input, paste, edits, configuration changes, and navigation mid-animation.
-- [ ] Add versioned share links and local preferences.
+- [x] Add textual traces, reset, undo through snapshots, history replay, and copy/export.
+- [x] Define and test rapid input, paste, edits, configuration changes, and navigation mid-animation.
+- [x] Add versioned share links and local preferences.
 - [ ] Verify responsive layouts and assistive-technology behavior manually as well as automatically.
 
 Done when: a visitor can encrypt, restore settings, decrypt, and inspect a letter on desktop and mobile without reading the library README.
@@ -367,7 +367,7 @@ Resolve decisions when their milestone needs them:
 | Hosting/domain/publication | Select after a working production preview exists | M6 |
 | Historical extensions | K/Swiss-K first, then UKW-D/Uhr/G | M8 |
 
-M0–M1 implementation is recorded in [the foundation decision](docs/decisions/0001-engine-foundation.md), and M2 in [the configuration and trace decision](docs/decisions/0002-configuration-and-traces.md). The M3 prototype now provides those interactions; see [the frontend decision](docs/decisions/0003-frontend-prototype.md). Review it before expanding into M4. Historical content research can progress alongside that milestone. Revisit this document after each milestone and turn its remaining checkboxes into implementation tasks as needed.
+M0–M1 implementation is recorded in [the foundation decision](docs/decisions/0001-engine-foundation.md), and M2 in [the configuration and trace decision](docs/decisions/0002-configuration-and-traces.md). The M3 prototype now provides those interactions; see [the frontend decision](docs/decisions/0003-frontend-prototype.md). The user accepted the visual direction. M4 message workflows are recorded in [the workflow decision](docs/decisions/0004-message-workflows.md); sequenced animation and manual accessibility verification are next. Historical content research can progress alongside that milestone. Revisit this document after each milestone and turn its remaining checkboxes into implementation tasks as needed.
 
 ## 11. Starting bibliography
 

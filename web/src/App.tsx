@@ -1,8 +1,21 @@
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import Machine from "./Machine";
+import MessageTools from "./MessageTools";
+import SessionTools from "./SessionTools";
+import {
+  readShareLink,
+  readGroupingPreference,
+  saveGroupingPreference,
+} from "./transport";
 import Inspector from "./Inspector";
 import Settings from "./Settings";
-import { createSession, letters, sessionReducer, type Action } from "./session";
+import {
+  createSession,
+  sessionFromSnapshot,
+  letters,
+  sessionReducer,
+  type Action,
+} from "./session";
 import { history, readings } from "./content";
 
 type View = "Learn" | "Explore" | "History" | "Reference";
@@ -44,23 +57,65 @@ export function SourceNote({ id }: { id: string }) {
   );
 }
 export default function App() {
-  const [view, setView] = useState<View>("Learn");
+  const [shared] = useState(() => readShareLink(window.location.hash));
+  const [view, setView] = useState<View>(
+    shared.snapshot || shared.error ? "Explore" : "Learn",
+  );
+  const [shareError, setShareError] = useState(shared.error);
+  const [settingsRevision, setSettingsRevision] = useState(0);
   const [learn, dispatchLearn] = useReducer(sessionReducer, undefined, () =>
     createSession(),
   );
-  const [explore, dispatchExplore] = useReducer(sessionReducer, undefined, () =>
-    createSession(),
+  const [explore, dispatchExplore] = useReducer(
+    sessionReducer,
+    undefined,
+    () =>
+      shared.snapshot ? sessionFromSnapshot(shared.snapshot) : createSession(),
   );
   const [lessonStep, setLessonStep] = useState(0);
   const [answer, setAnswer] = useState<string | null>(null);
+  const [draftMessage, setDraftMessage] = useState("");
+  const [selectedEntry, setSelectedEntry] = useState<number | null>(null);
+  const [grouped, setGrouped] = useState(readGroupingPreference);
+  function changeGrouping(value: boolean) {
+    setGrouped(value);
+    saveGroupingPreference(value);
+  }
   const [query, setQuery] = useState("");
   const [topic, setTopic] = useState("All topics");
   const session = view === "Learn" ? learn : explore;
-  const trace = session.entries.at(-1)?.trace;
+  const trace =
+    view === "Explore" && selectedEntry !== null
+      ? explore.entries[selectedEntry]?.trace
+      : session.entries.at(-1)?.trace;
   const lessonTrace = learn.entries.at(-1)?.trace;
+  useEffect(() => {
+    function receiveLink() {
+      const incoming = readShareLink(window.location.hash);
+      if (!incoming.snapshot && !incoming.error) return;
+      setView("Explore");
+      setShareError(incoming.error);
+      if (incoming.snapshot) {
+        dispatchExplore({ type: "configure", snapshot: incoming.snapshot });
+        setSelectedEntry(null);
+        setSettingsRevision((value) => value + 1);
+      }
+    }
+    window.addEventListener("hashchange", receiveLink);
+    return () => window.removeEventListener("hashchange", receiveLink);
+  }, []);
+
   function navigate(next: View) {
     setView(next);
     requestAnimationFrame(() => document.getElementById("page-title")?.focus());
+  }
+  function updateExplore(action: Action, refreshSettings = true) {
+    setSelectedEntry(null);
+    if (action.type === "configure") {
+      setShareError(undefined);
+      if (refreshSettings) setSettingsRevision((value) => value + 1);
+    }
+    dispatchExplore(action);
   }
   function dispatch(action: Action) {
     if (view === "Learn") {
@@ -72,7 +127,7 @@ export default function App() {
         setLessonStep(0);
         setAnswer(null);
       }
-    } else dispatchExplore(action);
+    } else updateExplore(action);
   }
   function press(letter: string) {
     dispatch({ type: "key", letter });
@@ -156,6 +211,12 @@ export default function App() {
             <span>DISCOVERY OUT</span>
           </div>
         </div>
+        {view === "Explore" && shareError && (
+          <p role="alert" className="error">
+            {shareError} No shared settings were applied; the current machine is
+            unchanged.
+          </p>
+        )}
         {(view === "Learn" || view === "Explore") && (
           <div className="workbench">
             <aside className="learning-column">
@@ -334,9 +395,10 @@ export default function App() {
                 </section>
               ) : (
                 <Settings
+                  key={settingsRevision}
                   configuration={explore.snapshot.configuration}
                   onApply={(snapshot) =>
-                    dispatchExplore({ type: "configure", snapshot })
+                    updateExplore({ type: "configure", snapshot }, false)
                   }
                 />
               )}
@@ -372,8 +434,29 @@ export default function App() {
                 dispatch={dispatch}
                 onKey={press}
                 learning={view === "Learn"}
+                grouped={view === "Explore" && grouped}
               />
+              {view === "Explore" && (
+                <MessageTools
+                  session={explore}
+                  draft={draftMessage}
+                  onDraft={setDraftMessage}
+                  onAppend={(text) => updateExplore({ type: "append", text })}
+                  selected={selectedEntry}
+                  onSelect={setSelectedEntry}
+                  grouped={grouped}
+                  onGrouped={changeGrouping}
+                />
+              )}
               <Inspector trace={trace} />
+              {view === "Explore" && (
+                <SessionTools
+                  session={explore}
+                  onRestore={(snapshot) =>
+                    updateExplore({ type: "configure", snapshot })
+                  }
+                />
+              )}
             </div>
           </div>
         )}

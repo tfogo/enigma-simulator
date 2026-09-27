@@ -1,5 +1,12 @@
 import type { Dispatch } from "react";
-import { alphabet, letters, type Action, type Session } from "./session";
+import {
+  alphabet,
+  letters,
+  groupLetters,
+  MESSAGE_LIMIT,
+  type Action,
+  type Session,
+} from "./session";
 
 const rows = ["QWERTZUIO", "ASDFGHJK", "PYXCVBNML"];
 export default function Machine({
@@ -7,11 +14,13 @@ export default function Machine({
   dispatch,
   onKey,
   learning,
+  grouped = false,
 }: {
   session: Session;
   dispatch: Dispatch<Action>;
   onKey: (letter: string) => void;
   learning: boolean;
+  grouped?: boolean;
 }) {
   const { configuration: config, state } = session.snapshot;
   const last = session.entries.at(-1)?.trace;
@@ -121,7 +130,7 @@ export default function Machine({
                   className={`machine-key ${last?.input === letter ? "pressed" : ""} ${learning && !last && letter === "A" ? "suggested" : ""}`}
                   key={letter}
                   onClick={() => onKey(letter)}
-                  disabled={session.entries.length >= 80}
+                  disabled={session.entries.length >= MESSAGE_LIMIT}
                 >
                   {letter}
                 </button>
@@ -155,7 +164,7 @@ export default function Machine({
         <div>
           <span className="eyebrow">THE MACHINE LIGHTS</span>
           <p data-testid="ciphertext">
-            {ciphertext || (
+            {(grouped ? groupLetters(ciphertext) : ciphertext) || (
               <span className="placeholder">A new letter appears</span>
             )}
           </p>
@@ -163,8 +172,9 @@ export default function Machine({
       </div>
       <div className="machine-actions">
         <span className="tiny muted">
-          Start {letters(config.positions)} <span aria-hidden="true">/</span>{" "}
-          Now {letters(state.positions)} · {session.entries.length}/80 letters
+          Start {letters(session.start.state.positions)}{" "}
+          <span aria-hidden="true">/</span> Now {letters(state.positions)} ·{" "}
+          {session.entries.length}/{MESSAGE_LIMIT} letters
         </span>
         <div>
           <button

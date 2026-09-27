@@ -33,6 +33,7 @@ export default function Settings({
         try {
           const machine = enigma(draft);
           onApply(machine.snapshot());
+          setDraft(machine.getConfiguration());
           setError("");
           setSaved("Settings applied. Ready for a new message.");
         } catch (e) {

@@ -260,7 +260,12 @@ export default function Inspector({ trace }: { trace?: enigma.Trace }) {
           </div>
           <details className="trace-table">
             <summary>Read the complete electrical trace</summary>
-            <div className="table-scroll">
+            <div
+              className="table-scroll"
+              tabIndex={0}
+              role="region"
+              aria-label="Electrical trace table"
+            >
               <table>
                 <caption className="sr-only">
                   Electrical connections in traversal order
