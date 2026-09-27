@@ -20,7 +20,8 @@
     "dev": "vite --force",
     "build:web": "tsc -p web/tsconfig.json && vite build",
     "preview": "vite preview",
-    "test:web": "playwright test -c web/playwright.config.ts"
+    "test:web": "playwright test -c web/playwright.config.ts",
+    "test:package": "node scripts/verify-package.cjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

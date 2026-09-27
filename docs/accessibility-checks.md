@@ -8,6 +8,8 @@ Last updated: 27 September 2026. This is a verification record, not a conformanc
 - Browser tests of keyboard input, Enter activation, focus retention at playback completion, and reduced-motion behavior.
 - Live keyboard and native accessibility-tree inspection in the macOS in-app browser: playback controls have names and states; Enter operates pause, next, and result; Tab reaches the result control; completion retains focus and exposes the F lamp and AAB windows.
 - Responsive visual inspection and page-overflow checks. The diagram and trace table have focusable scrolling regions.
+- Automated 320 CSS-pixel reflow checks of all four views, including M4 windows, reachable machine keys of at least 24 × 24 CSS pixels, and expanded History evidence. This models the layout width of 1280px at 400% zoom; actual browser zoom and physical touch usability remain separate manual checks.
+- Automated keyboard skip-link checks confirm the next Tab enters main content in both browser test projects.
 
 ## Manual screen-reader pass still required
 

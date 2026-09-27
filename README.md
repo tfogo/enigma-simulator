@@ -182,6 +182,7 @@ Repository documentation:
 - [Configuration and trace contracts](docs/decisions/0002-configuration-and-traces.md)
 - [Migration guide](docs/migration.md)
 - [Sources and fixture provenance](docs/sources.md)
+- [Contributing and reporting corrections](CONTRIBUTING.md)
 
 These documents are maintained in the repository and excluded from the npm runtime package. This increment fixes non-default M4 output, rejects formerly accepted invalid setups, and raises the supported Node baseline. It is intended for a future major release; no new version has been published.
 
@@ -208,9 +209,10 @@ Open `http://127.0.0.1:5173`. To verify the production frontend:
 npm run build:web
 npx playwright install chromium
 npm run test:web
+npm run test:package
 ```
 
-`npm run preview` serves the production build on port 4173. The static output is `web/dist/`. Machine and lesson state currently last only until reload; messages are limited to 500 letters. Explore previews pasted text, copies output, replays earlier letters, exports/restores current settings, and creates starting-settings links. Output grouping is remembered locally. Frontend dependencies are development-only and are excluded from the library's runtime package. See [the prototype decisions](docs/decisions/0003-frontend-prototype.md) for behavior and remaining review work.
+`npm run preview` serves the production build on port 4173. The static output is `web/dist/`. Live messages and experiment state last until reload; completed lesson IDs and output grouping are remembered locally. Messages are limited to 500 letters. Explore previews pasted text, copies output, replays earlier letters, exports/restores current settings, and creates starting-settings links. Output grouping is remembered locally. Frontend dependencies are development-only and are excluded from the library's runtime package. See [the prototype decisions](docs/decisions/0003-frontend-prototype.md) for behavior and remaining review work.
 
 
 To decipher a message, open its starting-settings link (or configure the same machine), paste the ciphertext into **Message to append**, check the preview, and append it. **Reset message** returns to that session’s starting windows. **Export current settings** saves a checkpoint; restoring it begins a fresh message at the saved live windows. Share links and exported settings contain no message text. See [the workflow decisions](docs/decisions/0004-message-workflows.md) for formats and validation.

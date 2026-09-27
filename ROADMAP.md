@@ -299,12 +299,12 @@ Depends on M5.
 
 - [ ] Complete engine, integration, accessibility, link, content, and packaging checks.
 - [ ] Validate source references and external links; audit historical claim coverage and provide a citation-correction route.
-- [ ] Verify a clean install/build and a browser import of the published package contents.
+- [x] Verify a clean install/build and a browser import of the candidate package contents. `npm run test:package` installs the actual tarball into a temporary consumer and checks a production browser bundle; no package has been published.
 - [ ] Add screenshots, quick start, contribution guidance, source acknowledgements, and licensing files.
 - [ ] Check rights for all included media and document attribution requirements.
 - [ ] Choose hosting, preview the production build, and verify direct navigation/deep links.
 - [ ] Decide versioning for changed behavior, prepare release notes, and agree publishing details before deployment/npm publication.
-- [ ] Record known limitations and create a feedback route.
+- [ ] Record release-specific known limitations. A historical/citation correction route now appears in Reference, with an issue template and contribution guidance; see decision 0010.
 
 Done when: the first learning journey works end to end from a deployed URL and the library can be consumed independently.
 

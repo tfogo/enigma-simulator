@@ -950,6 +950,17 @@ export default function App() {
               >
                 Read the research · page 6 ↗
               </a>
+              <p>
+                Found a mistake or broken link? Include the passage, its source,
+                and any evidence for a correction in a repository issue.
+              </p>
+              <a
+                href="https://github.com/tfogo/enigma-simulator/issues/new?template=historical-correction.md"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Report a historical or citation correction ↗
+              </a>
             </aside>
           </section>
         )}
