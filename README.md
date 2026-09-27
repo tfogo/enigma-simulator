@@ -217,3 +217,6 @@ To decipher a message, open its starting-settings link (or configure the same ma
 
 
 Choose **Follow the keypress** to see the rotors move before the signal reaches the lamp. **Play replay**, **Back**, **Next connection**, and **Show result now** control the inspector. The transcript updates immediately, while playback illustrates the latest letter. Reduced-motion preferences start guided playback paused. **Immediate result** keeps the fast interaction. See [playback behavior](docs/decisions/0005-guided-playback.md) and the [accessibility verification record](docs/accessibility-checks.md).
+
+
+The Learn lesson selector now offers four experiments: first keypress, repeated letters, one complete signal, and deciphering from restored settings. Each lesson includes feedback and a source note. Completed lessons are remembered on this browser and can be cleared; restarting restores the lesson configuration without changing Explore. See [the lesson decisions](docs/decisions/0006-first-four-lessons.md).

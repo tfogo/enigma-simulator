@@ -1,5 +1,13 @@
 import { useEffect, useReducer, useState } from "react";
 import Machine from "./Machine";
+import enigma from "enigma-simulator";
+import LessonActivity from "./LessonActivity";
+import {
+  lessons,
+  freshActivity,
+  loadCompletions,
+  saveCompletions,
+} from "./lessons";
 import { usePlayback, type PlaybackMode } from "./usePlayback";
 import MessageTools from "./MessageTools";
 import SessionTools from "./SessionTools";
@@ -73,6 +81,35 @@ export default function App() {
     () =>
       shared.snapshot ? sessionFromSnapshot(shared.snapshot) : createSession(),
   );
+  const [lessonIndex, setLessonIndex] = useState(0);
+  const [activity, setActivity] = useState(freshActivity);
+  const [completions, setCompletions] = useState(loadCompletions);
+  const lesson = lessons[lessonIndex];
+  function startLesson(index: number) {
+    setLessonIndex(index);
+    requestAnimationFrame(() =>
+      document.getElementById("lesson-title")?.focus(),
+    );
+    setActivity(freshActivity());
+    setLessonStep(0);
+    setAnswer(null);
+    dispatchLearn({
+      type: "configure",
+      snapshot: enigma(lessons[index].configuration).snapshot(),
+    });
+  }
+  function finishLesson() {
+    const next = [...new Set([...completions, lesson.id])];
+    setCompletions(next);
+    saveCompletions(next);
+  }
+  function replaceLessonMessage(text: string) {
+    dispatchLearn({
+      type: "configure",
+      snapshot: enigma(lesson.configuration).snapshot(),
+    });
+    dispatchLearn({ type: "append", text });
+  }
   const [lessonStep, setLessonStep] = useState(0);
   const [answer, setAnswer] = useState<string | null>(null);
   const [draftMessage, setDraftMessage] = useState("");
@@ -125,6 +162,13 @@ export default function App() {
   }
   function dispatch(action: Action) {
     if (view === "Learn") {
+      if (lessonIndex > 0)
+        setActivity((old) => ({
+          ...old,
+          ran: false,
+          deciphered: false,
+          triedWithoutReset: false,
+        }));
       dispatchLearn(action);
       if (
         action.type === "reset" ||
@@ -226,179 +270,256 @@ export default function App() {
         {(view === "Learn" || view === "Explore") && (
           <div className="workbench">
             <aside className="learning-column">
-              {view === "Learn" ? (
-                <section className="lesson-card" aria-labelledby="lesson-title">
-                  <div className="lesson-top">
-                    <span className="tag">LESSON 01</span>
-                    <span className="tiny muted">≈ 3 MINUTES</span>
-                  </div>
-                  <h2 id="lesson-title">Your first keypress.</h2>
-                  <p className="muted">No codebreaking experience required.</p>
-                  <ol className="lesson-progress" aria-label="Lesson progress">
-                    {["Press", "Observe", "Trace", "Discover"].map(
-                      (label, i) => (
-                        <li
-                          key={label}
-                          aria-current={i === lessonStep ? "step" : undefined}
-                          className={i <= lessonStep ? "reached" : ""}
-                        >
-                          <span>{i < lessonStep ? "✓" : i + 1}</span>
-                          <small>{label}</small>
-                        </li>
-                      ),
-                    )}
-                  </ol>
-                  <div className="lesson-copy" aria-live="polite">
-                    {lessonStep === 0 && (
-                      <>
-                        <h3>
-                          A letter goes in.
-                          <br />
-                          Another lights up.
-                        </h3>
-                        <p>
-                          The keyboard is your starting point. Press{" "}
-                          <strong>A</strong> and watch the windows above it.
-                        </p>
-                        <p>
-                          You don’t need to change any settings yet. The machine
-                          is ready.
-                        </p>
-                        <button className="primary" onClick={() => press("A")}>
-                          Try the A key <span>→</span>
-                        </button>
-                      </>
-                    )}
-                    {lessonStep === 1 && (
-                      <>
-                        <h3>First, something moves.</h3>
-                        <p>
-                          You pressed <strong>{lessonTrace?.input}</strong>. The
-                          machine lit <strong>{lessonTrace?.output}</strong>.
-                        </p>
-                        <div className="window-comparison">
-                          <span>
-                            {lessonTrace &&
-                              letters(lessonTrace.positionsBefore)}
-                          </span>
-                          <span>→</span>
-                          <strong>
-                            {lessonTrace && letters(lessonTrace.positionsAfter)}
-                          </strong>
-                        </div>
-                        <p>
-                          The rightmost rotor advanced before the electrical
-                          signal passed through. The circuit has already
-                          changed.
-                        </p>
-                        <button
-                          className="primary"
-                          onClick={() => setLessonStep(2)}
-                        >
-                          Follow the current <span>→</span>
-                        </button>
-                      </>
-                    )}
-                    {lessonStep === 2 && (
-                      <>
-                        <h3>Take the long way round.</h3>
-                        <p>
-                          The signal travels through the plugboard and rotors,
-                          reaches the reflector, then returns through the rotors
-                          to a lamp.
-                        </p>
-                        <p>
-                          Use <strong>Next connection</strong> in the panel
-                          below the machine to follow each part of the journey.
-                        </p>
-                        <button
-                          className="primary"
-                          onClick={() => {
-                            press(lessonTrace?.input ?? "A");
-                            setLessonStep(3);
-                          }}
-                        >
-                          Press {lessonTrace?.input ?? "A"} once more{" "}
-                          <span>→</span>
-                        </button>
-                      </>
-                    )}
-                    {lessonStep === 3 && (
-                      <>
-                        <h3>Same key. A new circuit.</h3>
-                        <p>
-                          The rotor moved again. Why can pressing the same key
-                          produce a different letter?
-                        </p>
-                        <div
-                          className="quiz"
-                          role="group"
-                          aria-label="Check your understanding"
-                        >
-                          <button
-                            className={answer === "rotor" ? "chosen" : ""}
-                            onClick={() => setAnswer("rotor")}
-                          >
-                            The rotor changes the signal’s route.
-                          </button>
-                          <button
-                            className={answer === "keyboard" ? "chosen" : ""}
-                            onClick={() => setAnswer("keyboard")}
-                          >
-                            The keyboard chooses a random letter.
-                          </button>
-                        </div>
-                        {answer === "keyboard" && (
-                          <p className="feedback">
-                            There’s no random choice in the circuit. Look at the
-                            moving rotor: its position changes which contacts
-                            connect. Try again.
-                          </p>
-                        )}
-                        {answer === "rotor" && (
-                          <div className="lesson-complete">
-                            <span className="eyebrow">
-                              ✓ FIRST DISCOVERY COMPLETE
-                            </span>
-                            <p>
-                              Exactly. The wiring is fixed, but its position
-                              changes. The same settings and keypresses always
-                              give the same result.
-                            </p>
-                            <button
-                              className="primary"
-                              onClick={() => navigate("Explore")}
-                            >
-                              Explore the machine <span>→</span>
-                            </button>
-                            <button
-                              className="text-button"
-                              onClick={() => navigate("History")}
-                            >
-                              Meet its history →
-                            </button>
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </div>
-                  <SourceNote id="mechanism" />
-                  {lessonStep > 0 && (
+              {view === "Learn" && (
+                <div className="lesson-picker">
+                  <label>
+                    Choose a lesson
+                    <select
+                      value={lessonIndex}
+                      onChange={(event) =>
+                        startLesson(Number(event.target.value))
+                      }
+                    >
+                      {lessons.map((item, index) => (
+                        <option key={item.id} value={index}>
+                          {index + 1}. {item.title}
+                          {completions.includes(item.id) ? " ✓" : ""}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <p className="tiny muted">
+                    {lesson.prerequisite} All lessons are open to explore.
+                  </p>
+                  <p className="tiny" role="status">
+                    {completions.length} of 4 lessons completed
+                  </p>
+                  {completions.length > 0 && (
                     <button
-                      className="text-button restart"
+                      className="text-button"
                       onClick={() => {
-                        dispatchLearn({
-                          type: "configure",
-                          snapshot: createSession().snapshot,
-                        });
-                        setLessonStep(0);
-                        setAnswer(null);
+                        setCompletions([]);
+                        saveCompletions([]);
                       }}
                     >
-                      ↺ Restart lesson
+                      Clear saved completions
                     </button>
                   )}
-                </section>
+                </div>
+              )}
+              {view === "Learn" ? (
+                lessonIndex > 0 ? (
+                  <LessonActivity
+                    lesson={lesson}
+                    activity={activity}
+                    onActivity={setActivity}
+                    session={learn}
+                    replaceMessage={replaceLessonMessage}
+                    append={(text) => dispatchLearn({ type: "append", text })}
+                    complete={finishLesson}
+                    completed={completions.includes(lesson.id)}
+                    restart={() => startLesson(lessonIndex)}
+                    next={
+                      lessonIndex < lessons.length - 1
+                        ? () => startLesson(lessonIndex + 1)
+                        : undefined
+                    }
+                    sourceNote={<SourceNote id={lesson.source} />}
+                  />
+                ) : (
+                  <section
+                    className="lesson-card"
+                    aria-labelledby="lesson-title"
+                  >
+                    <div className="lesson-top">
+                      <span className="tag">LESSON 01</span>
+                      <span className="tiny muted">≈ 3 MINUTES</span>
+                    </div>
+                    <h2 id="lesson-title" tabIndex={-1}>
+                      {lesson.title}.
+                    </h2>
+                    <p className="muted">
+                      No codebreaking experience required.
+                    </p>
+                    <ol
+                      className="lesson-progress"
+                      aria-label="Lesson progress"
+                    >
+                      {["Press", "Observe", "Trace", "Discover"].map(
+                        (label, i) => (
+                          <li
+                            key={label}
+                            aria-current={i === lessonStep ? "step" : undefined}
+                            className={i <= lessonStep ? "reached" : ""}
+                          >
+                            <span>{i < lessonStep ? "✓" : i + 1}</span>
+                            <small>{label}</small>
+                          </li>
+                        ),
+                      )}
+                    </ol>
+                    <div className="lesson-copy" aria-live="polite">
+                      {lessonStep === 0 && (
+                        <>
+                          <h3>
+                            A letter goes in.
+                            <br />
+                            Another lights up.
+                          </h3>
+                          <p>
+                            The keyboard is your starting point. Press{" "}
+                            <strong>A</strong> and watch the windows above it.
+                          </p>
+                          <p>
+                            You don’t need to change any settings yet. The
+                            machine is ready.
+                          </p>
+                          <button
+                            className="primary"
+                            onClick={() => press("A")}
+                          >
+                            Try the A key <span>→</span>
+                          </button>
+                        </>
+                      )}
+                      {lessonStep === 1 && (
+                        <>
+                          <h3>First, something moves.</h3>
+                          <p>
+                            You pressed <strong>{lessonTrace?.input}</strong>.
+                            The machine lit{" "}
+                            <strong>{lessonTrace?.output}</strong>.
+                          </p>
+                          <div className="window-comparison">
+                            <span>
+                              {lessonTrace &&
+                                letters(lessonTrace.positionsBefore)}
+                            </span>
+                            <span>→</span>
+                            <strong>
+                              {lessonTrace &&
+                                letters(lessonTrace.positionsAfter)}
+                            </strong>
+                          </div>
+                          <p>
+                            The rightmost rotor advanced before the electrical
+                            signal passed through. The circuit has already
+                            changed.
+                          </p>
+                          <button
+                            className="primary"
+                            onClick={() => setLessonStep(2)}
+                          >
+                            Follow the current <span>→</span>
+                          </button>
+                        </>
+                      )}
+                      {lessonStep === 2 && (
+                        <>
+                          <h3>Take the long way round.</h3>
+                          <p>
+                            The signal travels through the plugboard and rotors,
+                            reaches the reflector, then returns through the
+                            rotors to a lamp.
+                          </p>
+                          <p>
+                            Use <strong>Next connection</strong> in the panel
+                            below the machine to follow each part of the
+                            journey.
+                          </p>
+                          <button
+                            className="primary"
+                            onClick={() => {
+                              press(lessonTrace?.input ?? "A");
+                              setLessonStep(3);
+                            }}
+                          >
+                            Press {lessonTrace?.input ?? "A"} once more{" "}
+                            <span>→</span>
+                          </button>
+                        </>
+                      )}
+                      {lessonStep === 3 && (
+                        <>
+                          <h3>Same key. A new circuit.</h3>
+                          <p>
+                            The rotor moved again. Why can pressing the same key
+                            produce a different letter?
+                          </p>
+                          <div
+                            className="quiz"
+                            role="group"
+                            aria-label="Check your understanding"
+                          >
+                            <button
+                              className={answer === "rotor" ? "chosen" : ""}
+                              onClick={() => {
+                                setAnswer("rotor");
+                                finishLesson();
+                              }}
+                            >
+                              The rotor changes the signal’s route.
+                            </button>
+                            <button
+                              className={answer === "keyboard" ? "chosen" : ""}
+                              onClick={() => setAnswer("keyboard")}
+                            >
+                              The keyboard chooses a random letter.
+                            </button>
+                          </div>
+                          {answer === "keyboard" && (
+                            <p className="feedback">
+                              There’s no random choice in the circuit. Look at
+                              the moving rotor: its position changes which
+                              contacts connect. Try again.
+                            </p>
+                          )}
+                          {answer === "rotor" && (
+                            <div className="lesson-complete">
+                              <span className="eyebrow">
+                                ✓ FIRST DISCOVERY COMPLETE
+                              </span>
+                              <p>
+                                Exactly. The wiring is fixed, but its position
+                                changes. The same settings and keypresses always
+                                give the same result.
+                              </p>
+                              <button
+                                className="primary"
+                                onClick={() => startLesson(1)}
+                              >
+                                Next lesson →
+                              </button>
+                              <button
+                                className="primary"
+                                onClick={() => navigate("Explore")}
+                              >
+                                Explore the machine <span>→</span>
+                              </button>
+                              <button
+                                className="text-button"
+                                onClick={() => navigate("History")}
+                              >
+                                Meet its history →
+                              </button>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                    <SourceNote id="mechanism" />
+                    {lessonStep > 0 && (
+                      <button
+                        className="text-button restart"
+                        onClick={() => {
+                          startLesson(lessonIndex);
+                        }}
+                      >
+                        ↺ Restart lesson
+                      </button>
+                    )}
+                  </section>
+                )
               ) : (
                 <Settings
                   key={settingsRevision}

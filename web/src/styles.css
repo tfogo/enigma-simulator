@@ -1635,3 +1635,36 @@ button[aria-disabled="true"] {
 button[aria-disabled="true"]:hover {
   filter: none;
 }
+.lesson-picker {
+  margin-bottom: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper);
+}
+.lesson-picker label {
+  font-size: 12px;
+  font-weight: 600;
+}
+.lesson-picker select {
+  display: block;
+  width: 100%;
+  padding: 10px 6px;
+  margin: 8px 0;
+  color: var(--ink);
+  background: #fffef9;
+  border: 1px solid #a4ac99;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.lesson-picker p {
+  margin: 8px 0;
+}
+.experiment-observation {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.experiment-observation .secondary {
+  margin-top: 10px;
+}

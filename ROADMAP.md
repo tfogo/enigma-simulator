@@ -274,10 +274,10 @@ Done when: a visitor can encrypt, restore settings, decrypt, and inspect a lette
 
 ### M5 — Beginner lessons and initial history (large; research/writing can start after M0)
 
-Integration depends on M4.
+Integration uses the implemented M4 workflows. Manual M4 accessibility verification remains open; the first four lessons are implemented and recorded in [the lesson decision](docs/decisions/0006-first-four-lessons.md).
 
-- [ ] Build the lesson schema, progress controls, prediction questions, feedback, and deterministic resets.
-- [ ] Publish lessons 1–4 with complete checks and optional depth.
+- [x] Build the lesson schema, progress controls, prediction questions, feedback, and deterministic resets.
+- [x] Implement lessons 1–4 with automated checks and optional deeper reading (available in the local preview; public publication remains M6).
 - [ ] Publish a concise, sourced history route covering origins, the Polish contribution, wartime operation, and the Allied codebreaking workflow.
 - [ ] Add the glossary and first artifact/source pages.
 - [ ] Implement the shared source registry, contextual citation notes, and searchable reference library.
